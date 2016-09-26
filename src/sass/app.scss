@@ -1,0 +1,12 @@
+@import 'variables';
+@import 'mixins';
+@import 'typography';
+@import 'buttons';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #727272;
+}

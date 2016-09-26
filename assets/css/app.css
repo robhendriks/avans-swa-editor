@@ -1,0 +1,71 @@
+/* BUTTONS */
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+html {
+  font-size: 62.5%; }
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.5rem;
+  line-height: 1.6rem; }
+
+.btn {
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0 8px;
+  line-height: 2rem;
+  border: 1px #191919 solid;
+  border-radius: 4px;
+  color: #000;
+  text-align: center;
+  text-decoration: none;
+  background: linear-gradient(#a6a6a6, #8c8c8c); }
+  .btn:hover {
+    background: linear-gradient(#b3b3b3, #999999); }
+  .btn:active {
+    color: #fff;
+    background: linear-gradient(#575757, #717171); }
+
+.btns {
+  display: inline-block;
+  margin: 5px 0; }
+  .btns.horizontal .btn,
+  .btns.justified .btn {
+    float: left; }
+    .btns.horizontal .btn:not(:first-child):not(:last-child),
+    .btns.justified .btn:not(:first-child):not(:last-child) {
+      border-radius: 0; }
+    .btns.horizontal .btn:not(:last-child),
+    .btns.justified .btn:not(:last-child) {
+      border-right-width: 0; }
+    .btns.horizontal .btn:first-child,
+    .btns.justified .btn:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0; }
+    .btns.horizontal .btn:last-child,
+    .btns.justified .btn:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0; }
+  .btns.justified {
+    display: flex;
+    flex-direction: row; }
+    .btns.justified .btn {
+      flex: 1; }
+  .btns.vertical .btn {
+    display: block; }
+    .btns.vertical .btn:not(:first-child):not(:last-child) {
+      border-radius: 0; }
+    .btns.vertical .btn:not(:last-child) {
+      border-bottom-width: 0; }
+    .btns.vertical .btn:first-child {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0; }
+    .btns.vertical .btn:last-child {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0; }
+
+* {
+  box-sizing: border-box; }
+
+html {
+  background-color: #727272; }

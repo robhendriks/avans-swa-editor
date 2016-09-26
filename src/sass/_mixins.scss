@@ -1,0 +1,7 @@
+@mixin shade($color) {
+  background: linear-gradient(lighten($color, 5%), darken($color, 5%));
+}
+
+@mixin shade-selected($color) {
+  background: linear-gradient(darken($color, 5%), lighten($color, 5%));
+}

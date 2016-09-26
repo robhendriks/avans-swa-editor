@@ -1,0 +1,82 @@
+.btn {
+  display: inline-block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0 8px;
+  line-height: 2rem;
+  border: $btn-border;
+  border-radius: $btn-border-radius;
+  color: $btn-text-color;
+  text-align: center;
+  text-decoration: none;
+
+  @include shade($btn-background-color);
+
+  &:hover {
+    @include shade(lighten($btn-background-color, 5%));
+  }
+
+  &:active {
+    color: $btn-text-color-selected;
+    @include shade-selected($btn-background-color-selected);
+  }
+}
+
+.btns {
+  display: inline-block;
+  margin: 5px 0;
+
+  &.horizontal .btn,
+  &.justified .btn {
+    float: left;
+
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+
+    &:not(:last-child) {
+      border-right-width: 0;
+    }
+
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:last-child {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  &.justified {
+    display: flex;
+    flex-direction: row;
+
+    .btn {
+      flex: 1;
+    }
+  }
+
+  &.vertical .btn {
+    display: block;
+
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+
+    &:not(:last-child) {
+      border-bottom-width: 0;
+    }
+
+    &:first-child {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:last-child {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+}
