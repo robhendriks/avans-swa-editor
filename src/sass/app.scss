@@ -1,12 +1,45 @@
 @import 'variables';
 @import 'mixins';
+@import 'utility';
 @import 'typography';
+@import 'icons';
 @import 'buttons';
 
 * {
   box-sizing: border-box;
 }
 
+html,
+body,
+#app {
+  height: 100%;
+}
+
 html {
-  background-color: #727272;
+  background-color: $background-color;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#toolbar {
+  position: absolute;
+  overflow: scroll;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: $toolbar-width;
+  padding: 10px;
+  background-color: $toolbar-background-color;
+}
+
+#content {
+  position: absolute;
+  left: $toolbar-width;
+  top: 0;
+  right: 0;
+  height: 100%;
 }

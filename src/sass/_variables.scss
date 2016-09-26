@@ -7,3 +7,22 @@ $btn-border-width: 1px;
 $btn-border-color: #191919;
 $btn-border: $btn-border-width $btn-border-color solid;
 $btn-border-radius: 4px !default;
+
+/* ICONS */
+$icon-size: 16px;
+$icon-image: url(../images/icons.png);
+$icon-image-hdpi: url(../images/icons@2x.png);
+$icon-image-size: 85px;
+$icon-offset: 3px;
+$icon-margin: 5px;
+$icons: (
+  folder, file, new, check,
+  plane, cube, circle, monkey
+);
+
+/* GENERAL */
+$background-color: #393939;
+
+/* TOOLBAR */
+$toolbar-width: 200px;
+$toolbar-background-color: #727272;

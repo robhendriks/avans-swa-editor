@@ -1,0 +1,26 @@
+.icon {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  width: $icon-size;
+  height: $icon-size;
+  background-image: $icon-image;
+  background-repeat: none;
+  background-size: $icon-image-size $icon-image-size;
+
+  @media
+  (min-device-pixel-ratio: 1.25),
+  (min-resolution: 120dpi) {
+    background-image: $icon-image-hdpi;
+  }
+
+  @each $icon in $icons {
+    $i: index($icons, $icon) - 1;
+    $y: floor($i / 4);
+    $x: $i % 4;
+
+    &.#{$icon} {
+      background-position: (-($icon-offset + $x * ($icon-size + $icon-margin))) (-($icon-offset + $y * ($icon-size + $icon-margin)));
+    }
+  }
+}

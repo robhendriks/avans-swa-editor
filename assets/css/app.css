@@ -1,5 +1,14 @@
 /* BUTTONS */
+/* ICONS */
+/* GENERAL */
+/* TOOLBAR */
 @import 'https://fonts.googleapis.com/css?family=Open+Sans';
+.to-left {
+  float: left; }
+
+.to-right {
+  float: right; }
+
 html {
   font-size: 62.5%; }
 
@@ -7,6 +16,35 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 1.5rem;
   line-height: 1.6rem; }
+
+.icon {
+  position: relative;
+  top: 2px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url(../images/icons.png);
+  background-repeat: none;
+  background-size: 85px 85px; }
+  @media (min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+    .icon {
+      background-image: url(../images/icons@2x.png); } }
+  .icon.folder {
+    background-position: -3px -3px; }
+  .icon.file {
+    background-position: -24px -3px; }
+  .icon.new {
+    background-position: -45px -3px; }
+  .icon.check {
+    background-position: -66px -3px; }
+  .icon.plane {
+    background-position: -3px -24px; }
+  .icon.cube {
+    background-position: -24px -24px; }
+  .icon.circle {
+    background-position: -45px -24px; }
+  .icon.monkey {
+    background-position: -66px -24px; }
 
 .btn {
   display: inline-block;
@@ -67,5 +105,32 @@ body {
 * {
   box-sizing: border-box; }
 
+html,
+body,
+#app {
+  height: 100%; }
+
 html {
+  background-color: #393939; }
+
+body {
+  margin: 0;
+  padding: 0; }
+
+#toolbar {
+  position: absolute;
+  overflow: scroll;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 200px;
+  padding: 10px;
   background-color: #727272; }
+
+#content {
+  position: absolute;
+  left: 200px;
+  top: 0;
+  right: 0;
+  height: 100%; }
