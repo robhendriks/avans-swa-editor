@@ -1,34 +1,28 @@
-const util = require('util')
+const util = require('./util')
+const math = require('./math')
 const Tile = require('./tile')
-const EventEmitter = require('events').EventEmitter
 
-const TILE_WIDTH = 32
-const TILE_HEIGHT = 32
+const MIN_SIZE = 16
+const MAX_SIZE = 128
 
 function World (width, height) {
-  this._tiles = []
-  this.width = width
-  this.height = height
+  this.width = width || MIN_SIZE
+  this.height = height || MIN_SIZE
 }
 
 World.prototype = {
+
   constructor: World,
-
-  addTile: function (tile) {
-    this._tiles.push(tile || new Tile(0, 0))
-  },
-
-  get tiles () {
-    return this._tiles
-  },
 
   get width () {
     return this._width
   },
 
   set width (value) {
-    this._width = value || 10
-    this.emit('resize')
+    if (!util.isPowerOfTwo(value)) {
+      throw new Error('width must be a power of 2')
+    }
+    this._width = math.clamp(value, MIN_SIZE, MAX_SIZE)
   },
 
   get height () {
@@ -36,27 +30,20 @@ World.prototype = {
   },
 
   set height (value) {
-    this._height = value || 10
-    this.emit('resize')
+    if (!util.isPowerOfTwo(value)) {
+      throw new Error('height must be a power of 2')
+    }
+    this._height = math.clamp(value, MIN_SIZE, MAX_SIZE)
   },
 
-  get tileWidth () {
-    return TILE_WIDTH
+  get clientWidth () {
+    return this._width * Tile.WIDTH
   },
 
-  get tileHeight () {
-    return TILE_HEIGHT
-  },
-
-  get actualWidth () {
-    return this._width * TILE_WIDTH
-  },
-
-  get actualHeight () {
-    return this._height * TILE_HEIGHT
+  get clientHeight () {
+    return this._height * Tile.HEIGHT
   }
-}
 
-util.inherits(World, EventEmitter)
+}
 
 module.exports = World

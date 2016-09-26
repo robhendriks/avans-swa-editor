@@ -1,156 +1,117 @@
+const extend = require('extend')
+const util = require('./util')
 const World = require('./world')
 const Tile = require('./tile')
+const Grid = require('./grid')
+const Axes = require('./axes')
 
-const sources = {
-  tiles: 'assets/images/tiles.png'
+function Canvas (options) {
+  this._options = {
+    id: 'canvas'
+  }
+  this._canvas = null
+  this._context = null
+  this._ratio = 0
+  this._scale = 1
+  this._width = 0
+  this._height = 0
+  this._world = null
+  this._grid = new Grid()
+  this._axes = new Axes()
 }
 
-let images = {}
-let canvas = null
-let context = null
-let ratio = 1
-let zoom = 1
-let width = 0
-let height = 0
-let world = null
-let tileSprite = null
+Canvas.prototype = {
 
-function init () {
-  canvas = document.getElementById('canvas')
-  context = canvas.getContext('2d')
+  constructor: Canvas,
 
-  world = new World(10, 10)
+  init: function (options) {
+    extend(this._options, options || {})
 
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 10; j++) {
-      world.addTile(new Tile(i, j, Math.floor(Math.random() * 4) + 1))
+    let id = this._options['id']
+    let world = this._options['world']
+
+    let canvas = document.getElementById(id)
+
+    this._canvas = canvas
+    this._context = canvas.getContext('2d')
+    this._world = world
+
+    this._registerEvents()
+    this._resize()
+  },
+
+  _registerEvents: function () {
+    window.addEventListener('resize', this._resize.bind(this))
+  },
+
+  _resize: function () {
+    let parent = this._canvas.parentNode
+    let w = this._width = parent.clientWidth
+    let h = this._height = parent.clientHeight
+
+    let r = this._ratio = util.getRatio(this._context)
+    let canvas = this._canvas
+
+    canvas.width = w * r
+    canvas.height = h * r
+    canvas.style.width = w + 'px'
+    canvas.style.height = h + 'px'
+
+    this._invalidate()
+  },
+
+  _invalidate: function () {
+    this._render()
+  },
+
+  _render: function () {
+    let ctx = this._context
+
+    ctx.save()
+    ctx.scale(this._ratio, this._ratio)
+
+    let world
+    if ((world = this._world) !== null) {
+      let w = this._width
+      let h = this._height
+      let s = this._scale
+
+      let x = (w / 2 - world.clientWidth * s / 2) / s
+      let y = (h / 2 - world.clientHeight * s / 2) / s
+
+      ctx.save()
+      ctx.translate(x, y)
+
+      this._grid.render(ctx, this)
+      this._axes.render(ctx, this)
+
+      ctx.restore()
     }
+
+    ctx.restore()
+  },
+
+  get width () {
+    return this._width
+  },
+
+  get height () {
+    return this._height
+  },
+
+  get world () {
+    return this._world
+  },
+
+  set world (value) {
+    this._world = value
+    this._invalidate()
+  },
+
+  get grid () {
+    return this._grid
   }
 
-  tileSprite = images['tiles']
-
-  window.addEventListener('resize', resize)
-  resize()
 }
 
-function resize (evt) {
-  let parent = canvas.parentNode
-  width = parent.clientWidth
-  height = parent.clientHeight
-
-  let devicePixelRatio = window.devicePixelRatio || 1
-  let backingStoreRatio = context.backingStorePixelRatio || 1
-  ratio = devicePixelRatio / backingStoreRatio
-
-  canvas.width = width * ratio
-  canvas.height = height * ratio
-
-  canvas.style.width = width + 'px'
-  canvas.style.height = height + 'px'
-
-  redraw()
-}
-
-function redraw () {
-  context.save()
-  context.scale(ratio + (zoom - 1), ratio + (zoom - 1))
-
-  if (world !== null) {
-    drawGrid()
-    drawWorld()
-    drawAxes()
-  }
-
-  context.restore()
-}
-
-function drawGrid () {
-  // this.x = ((int)((getSize().width / 2.0F - this.layout.width * this.SCALE / 2.0F) / this.SCALE));
-  // this.y = ((int)((getSize().height / 2.0F - this.layout.height * this.SCALE / 2.0F) / this.SCALE));
-
-  let x = (width / 2 - world.actualWidth * zoom / 2) / zoom
-  let y = (height / 2 - world.actualHeight * zoom / 2) / zoom
-
-  context.save()
-  context.translate(x, y)
-
-  context.lineWidth = 1
-  context.strokeStyle = '#404040'
-
-  // Grid x
-  for (let i = 0; i <= world.width; i++) {
-    if (i === world.width / 2) { continue }
-    context.beginPath()
-    context.moveTo(i * world.tileWidth, 0)
-    context.lineTo(i * world.tileHeight, world.actualHeight)
-    context.stroke()
-  }
-
-  // Grid y
-  for (let i = 0; i <= world.height; i++) {
-    if (i === world.height / 2) { continue }
-    context.beginPath()
-    context.moveTo(0, i * world.tileHeight)
-    context.lineTo(world.actualWidth, i * world.tileHeight)
-    context.stroke()
-  }
-}
-
-function drawWorld () {
-  context.fillStyle = '#f4f4f4'
-
-  for (let i = 0; i < world.tiles.length; i++) {
-    let tile = world.tiles[i]
-    if (tile.type === -1) { continue }
-
-    context.save()
-    context.translate(tile.x * world.tileWidth, tile.y * world.tileHeight)
-
-    let x = tile.type % 4
-    let y = Math.floor(tile.type / 4)
-    let sx = x * 64
-    let sy = y * 64
-
-    context.drawImage(tileSprite, sx, sy, 64, 64, 0, 0, world.tileWidth, world.tileHeight)
-    context.restore()
-  }
-}
-
-function drawAxes () {
-  // X-axis
-  context.strokeStyle = '#DC0000'
-
-  context.beginPath()
-  context.moveTo(0, world.actualHeight / 2)
-  context.lineTo(world.actualWidth, world.actualHeight / 2)
-  context.stroke()
-
-  // Y-axis
-  context.strokeStyle = '#00DC00'
-
-  context.beginPath()
-  context.moveTo(world.actualWidth / 2, 0)
-  context.lineTo(world.actualWidth / 2, world.actualHeight)
-  context.stroke()
-}
-
-function load (callback) {
-  let size = 0
-  for (let src in sources) {
-    size++
-  }
-
-  let loaded = 0
-  for (let src in sources) {
-    console.log('Loading resource \'%s\'...', sources[src])
-    images[src] = new Image()
-    images[src].onload = function () {
-      if (++loaded >= size) {
-        callback()
-      }
-    }
-    images[src].src = sources[src]
-  }
-}
-
-load(init)
+module.exports = new Canvas()
