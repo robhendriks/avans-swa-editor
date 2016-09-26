@@ -66,15 +66,16 @@ Canvas.prototype = {
 
   _render: function () {
     let ctx = this._context
+    let r = this._ratio
+    let s = this._scale
 
     ctx.save()
-    ctx.scale(this._ratio, this._ratio)
+    ctx.scale(r * s, r * s)
 
     let world
     if ((world = this._world) !== null) {
       let w = this._width
       let h = this._height
-      let s = this._scale
 
       let x = (w / 2 - world.clientWidth * s / 2) / s
       let y = (h / 2 - world.clientHeight * s / 2) / s
