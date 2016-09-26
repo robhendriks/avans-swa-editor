@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-
   <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
@@ -20,11 +19,20 @@
           <a href="#" class="btn"><i class="icon cube to-left"></i> Object</a>
           <a href="#" class="btn"><i class="icon monkey to-left"></i> Entity</a>
         </div>
+        <br>
+        <div class="btns justified">
+          <a href="#" class="btn toggle active">A</a>
+          <a href="#" class="btn toggle">B</a>
+          <a href="#" class="btn toggle">C</a>
+        </div>
       </div>
     </aside>
     <main id="content">
-
+      <canvas id="canvas"></canvas>
     </main>
   </div>
+  <script>
+    require('./assets/canvas');
+  </script>
 </body>
 </html>

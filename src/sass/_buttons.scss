@@ -20,6 +20,21 @@
     color: $btn-text-color-selected;
     @include shade-selected($btn-background-color-selected);
   }
+
+  &.toggle {
+    color: $btn-text-color-selected;
+    @include shade($toggle-background-color);
+
+    &:hover {
+      @include shade(lighten($toggle-background-color, 5%));
+    }
+
+    &:active,
+    &.active {
+      color: $btn-text-color;
+      @include shade-selected($toggle-background-color-selected);
+    }
+  }
 }
 
 .btns {

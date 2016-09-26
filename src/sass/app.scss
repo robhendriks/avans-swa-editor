@@ -38,6 +38,7 @@ body {
 
 #content {
   position: absolute;
+  overflow: hidden;
   left: $toolbar-width;
   top: 0;
   right: 0;
