@@ -2,6 +2,7 @@ const editile = require('./libs/editile')
 const editor = new editile.Editor()
 
 editor.init({
+  selector: '#editor',
   tools: [
     new editile.tools.Hand(),
     new editile.tools.Brush()
@@ -11,7 +12,7 @@ editor.init({
     new editile.layers.Tiles()
   ],
   sprites: [
-    new editile.Sprite(0, 'assets/images/tiles.png')
+    new editile.Sprite(0, 'assets/images/tiles.png', 4, 4)
   ]
 })
 
