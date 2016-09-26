@@ -5,6 +5,9 @@ function Brush () {
   Tool.call(this)
 }
 
+Brush.prototype.id = 'brush'
+Brush.prototype.label = 'Brush'
+
 Brush.prototype.mouseDown = function () {
   console.log('>brush down<')
 }

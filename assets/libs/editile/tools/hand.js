@@ -5,6 +5,9 @@ function Hand () {
   Tool.call(this)
 }
 
+Hand.prototype.id = 'hand'
+Hand.prototype.label = 'Hand'
+
 Hand.prototype.mouseDown = function () {
   console.log('>hand down<')
 }

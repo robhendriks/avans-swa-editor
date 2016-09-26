@@ -1,6 +1,9 @@
 function Tool () {
 }
 
+Tool.prototype.id = undefined
+Tool.prototype.label = undefined
+
 Tool.prototype.mouseDown = function () {
   throw new Error('Tool::mouseDown not yet implemented')
 }
