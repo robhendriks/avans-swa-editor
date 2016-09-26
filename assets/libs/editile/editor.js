@@ -87,6 +87,8 @@ Editor.prototype._initEditor = function (options) {
 
   window.addEventListener('resize', this._resizeEditor.bind(this))
   this._resizeEditor()
+
+  this.emit('ready')
 }
 
 Editor.prototype._resizeEditor = function (evt) {
@@ -113,13 +115,54 @@ Editor.prototype.invalidate = function () {
 Editor.prototype.render = function () {
   let ctx = this._context
 
-  ctx.save()
-  ctx.scale(this._ratio * this._scale, this._ratio * this._scale)
+  let r = this._ratio
+  let s = this._scale
 
-  let x = 0
-  let y = 0
+  ctx.clearRect(0, 0, this._width, this._height)
+
+  ctx.save()
+  ctx.scale(r * s, r * s)
+
+  let world
+  if ((world = this._world) !== null) {
+    let w = this._width
+    let h = this._height
+
+    let x = (w / 2 - world.getScreenWidth() * s / 2) / s
+    let y = (h / 2 - world.getScreenHeight() * s / 2) / s
+
+    ctx.save()
+    ctx.translate(x, y)
+
+    let rect = {
+      x: x, y: y,
+      w: w, h: h
+    }
+
+    for (let i = 0; i < this._layers.length; i++) {
+      let layer = this._layers[i]
+      layer.render(ctx, rect, this)
+    }
+
+    ctx.restore()
+  }
 
   ctx.restore()
+}
+
+Editor.prototype.resetZoom = function () {
+  this._scale = 1
+  this.invalidate()
+}
+
+Editor.prototype.zoomOut = function () {
+  this._scale = Math.max(this._scale - .125, .5)
+  this.invalidate()
+}
+
+Editor.prototype.zoomIn = function () {
+  this._scale = Math.min(this._scale + .25, 2)
+  this.invalidate()
 }
 
 Editor.prototype.getTools = function () {
@@ -128,6 +171,15 @@ Editor.prototype.getTools = function () {
 
 Editor.prototype.getLayers = function () {
   return this._layers
+}
+
+Editor.prototype.getWorld = function () {
+  return this._world
+}
+
+Editor.prototype.setWorld = function (newValue) {
+  this._world = newValue
+  this.invalidate()
 }
 
 util.inherits(Editor, EventEmitter)

@@ -10,7 +10,7 @@ Layer.prototype.id = undefined
 Layer.prototype.label = undefined
 Layer.prototype.zIndex = undefined
 
-Layer.prototype.render = function () {
+Layer.prototype.render = function (ctx, rect, editor) {
   throw new Error('Layer::render not yet implemented')
 }
 

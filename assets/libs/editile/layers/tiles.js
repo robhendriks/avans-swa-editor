@@ -7,7 +7,11 @@ function Tiles () {
 
 Tiles.prototype.id = 'tiles'
 Tiles.prototype.label = 'Tiles'
-Tiles.prototype.zIndex = 2
+Tiles.prototype.zIndex = 3
+
+Tiles.prototype.render = function (ctx, editor) {
+
+}
 
 util.inherits(Tiles, Layer)
 
