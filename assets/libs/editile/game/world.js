@@ -13,6 +13,24 @@ function World (width, height) {
 World.MIN_SIZE = 16
 World.MAX_SIZE = 64
 
+World.prototype.selectAll = function () {
+  for (let tile of this._tiles) {
+    tile.selected = true
+  }
+}
+
+World.prototype.deselectAll = function () {
+  for (let tile of this._tiles) {
+    tile.selected = false
+  }
+}
+
+World.prototype.invertSelection = function () {
+  for (let tile of this._tiles) {
+    tile.selected = !tile.selected
+  }
+}
+
 World.prototype.getWidth = function () {
   return this._width
 }
@@ -40,7 +58,19 @@ World.prototype.getScreenHeight = function () {
 }
 
 World.prototype.addTile = function (x, y, type) {
-  this._tiles.push(new Tile(x, y, type))
+  if (!this.getTileAt(x, y)) {
+    let tile = new Tile(x, y, type)
+    this._tiles.push(tile)
+    return tile
+  }
+  return false
+}
+
+World.prototype.deleteTile = function (x, y) {
+  let index
+  if ((index = this.getTileIndex(x, y)) !== -1) {
+    this._tiles.splice(index, 1)
+  }
 }
 
 World.prototype.getTileAt = function (x, y) {
@@ -50,6 +80,17 @@ World.prototype.getTileAt = function (x, y) {
       return tile
     }
   }
+  return false
+}
+
+World.prototype.getTileIndex = function (x, y) {
+  for (let i = 0, il = this._tiles.length; i < il; i++) {
+    let tile = this._tiles[i]
+    if (tile.x === x && tile.y === y) {
+      return i
+    }
+  }
+  return -1
 }
 
 World.prototype.getTiles = function () {

@@ -28,11 +28,23 @@ Pencil.prototype.mouseUp = function (evt, editor) {
     return
   }
 
-  let point = this._point
-  let tile = world.getTileAt(point.x / Tile.WIDTH, point.y / Tile.HEIGHT)
+  let x = this._point.x / Tile.WIDTH
+  let y = this._point.y / Tile.HEIGHT
 
-  tile.type = 3
-  editor.invalidate()
+  let tile = world.getTileAt(x, y)
+
+  // Distinguish mouse button
+  if (evt.which === 1) {
+    if (!tile) {
+      tile = world.addTile(x, y, 3)
+    } else {
+      tile.type = 3
+    }
+  } else if (evt.which === 3 && tile) {
+    world.deleteTile(tile.x, tile.y)
+  }
+
+  editor.invalidate(true)
 }
 
 Pencil.prototype.mouseMove = function (evt, editor) {

@@ -5,6 +5,7 @@ function Layer () {
   EventEmitter.call(this)
   this._visible = true
   this._relative = true
+  this._scalable = true
 }
 
 Layer.prototype.id = undefined
@@ -34,6 +35,14 @@ Layer.prototype.isRelative = function () {
 
 Layer.prototype.setRelative = function (newValue) {
   this._relative = newValue
+}
+
+Layer.prototype.isScalable = function () {
+  return this._scalable
+}
+
+Layer.prototype.setScalable = function (newValue) {
+  this._scalable = newValue
 }
 
 util.inherits(Layer, EventEmitter)

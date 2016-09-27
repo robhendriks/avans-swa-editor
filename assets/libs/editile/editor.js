@@ -257,7 +257,7 @@ Editor.prototype.render = function () {
   let s = this._scale
 
   ctx.save()
-  ctx.scale(r * s, r * s)
+  ctx.scale(r, r)
 
   let world
   if ((world = this._world) !== null) {
@@ -267,9 +267,6 @@ Editor.prototype.render = function () {
     let x = Math.round(this._x = (w / 2 - world.getScreenWidth() * s / 2) / s)
     let y = Math.round(this._y = (h / 2 - world.getScreenHeight() * s / 2) / s)
 
-    ctx.save()
-    ctx.translate(x, y)
-
     let rect = {
       x: x, y: y,
       w: w, h: h
@@ -278,24 +275,34 @@ Editor.prototype.render = function () {
     for (let i = 0; i < this._layers.length; i++) {
       let layer = this._layers[i]
       if (layer.isVisible()) {
-        if (!layer.isRelative()) {
-          ctx.translate(-x, -y)
+        ctx.save()
+
+        // Scale layer if requested
+        if (layer.isScalable()) {
+          ctx.scale(s, s)
         }
-        layer.render(ctx, rect, this)
-        if (!layer.isRelative()) {
+
+        // Translate layer if requested
+        if (layer.isRelative()) {
           ctx.translate(x, y)
         }
+
+        layer.render(ctx, rect, this)
+        ctx.restore()
       }
     }
+
+    ctx.save()
+    ctx.scale(s, s)
+    ctx.translate(x, y)
 
     if (this._tool) {
       this._tool.render(ctx)
     }
 
     ctx.restore()
+    ctx.restore()
   }
-
-  ctx.restore()
 }
 
 Editor.prototype.resetZoom = function () {

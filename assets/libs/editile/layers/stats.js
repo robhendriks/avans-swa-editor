@@ -5,6 +5,7 @@ const Tile = require('../game/tile').Tile
 function Stats () {
   Layer.call(this)
   this.setRelative(false)
+  this.setScalable(false)
 }
 
 Stats.prototype.id = 'stats'

@@ -22,11 +22,11 @@ editor.init({
 editor.on('ready', function () {
   let world = new editile.World()
 
-  for (let y = 0; y < 16; y++) {
+  /*for (let y = 0; y < 16; y++) {
     for (let x = 0; x < 16; x++) {
       world.addTile(x, y, 1)
     }
-  }
+  }*/
 
   this.setWorld(world)
 })

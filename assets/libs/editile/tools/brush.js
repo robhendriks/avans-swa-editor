@@ -4,6 +4,7 @@ const Tool = require('./tool').Tool
 function Brush () {
   Tool.call(this)
   this._dragging = null
+  this._stroke = null
   this._points = []
   this._prev = null
 }
@@ -31,6 +32,10 @@ Brush.prototype.mouseDown = function (evt, editor) {
     return
   }
   this._dragging = true
+  this._stroke = (evt.which === 3
+    ? 'rgba(86, 0, 0, .3)'
+    : 'rgba(0, 86, 0, .3')
+
   editor.invalidate(true)
 }
 
@@ -39,6 +44,7 @@ Brush.prototype.mouseUp = function (evt, editor) {
     return
   }
   this._dragging = false
+  this._stroke = null
   this._points = []
   this._prev = null
 
@@ -59,12 +65,22 @@ Brush.prototype.mouseMove = function (evt, editor) {
     let x = point.x / 32
     let y = point.y / 32
 
-    if ((x >= 0 && x <= world.getWidth()) && (y >= 0 && x <= world.getHeight())) {
-      let tile = world.getTileAt(x, y)
-      if (tile && (this._prev === null || !this._prev.equals(point))) {
-        tile.type = 12
+    if ((x >= 0 && x < world.getWidth()) && (y >= 0 && y < world.getHeight())) {
+      if (this._prev === null || !this._prev.equals(point)) {
+        let tile = world.getTileAt(x, y)
+
+        // Distinguish mouse button
+        if (evt.which === 1) {
+          if (!tile) {
+            world.addTile(x, y, 12)
+          } else {
+            tile.type = 12
+          }
+        } else if (evt.which === 3 && tile) {
+          world.deleteTile(tile.x, tile.y)
+        }
+
         this._prev = point
-        console.log('ayy')
       }
     }
   }
@@ -73,7 +89,7 @@ Brush.prototype.mouseMove = function (evt, editor) {
 }
 
 Brush.prototype.render = function (ctx) {
-  ctx.strokeStyle = 'rgba(255, 255, 255, .1)'
+  ctx.strokeStyle = this._stroke
   ctx.lineJoin = 'round'
   ctx.lineCap = 'round'
   ctx.lineWidth = 8
