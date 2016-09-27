@@ -6,7 +6,8 @@ editor.init({
   tools: [
     new editile.tools.Hand(),
     new editile.tools.Brush(),
-    new editile.tools.Pencil()
+    new editile.tools.Pencil(),
+    new editile.tools.Fill()
   ],
   layers: [
     new editile.layers.Grid(),
@@ -20,7 +21,7 @@ editor.init({
 })
 
 editor.on('ready', function () {
-  let world = new editile.World()
+  let world = new editile.World(16, 16)
 
   /*for (let y = 0; y < 16; y++) {
     for (let x = 0; x < 16; x++) {

@@ -31,6 +31,10 @@ Pencil.prototype.mouseUp = function (evt, editor) {
   let x = this._point.x / Tile.WIDTH
   let y = this._point.y / Tile.HEIGHT
 
+  if (world.outOfBounds(x, y)) {
+    return
+  }
+
   let tile = world.getTileAt(x, y)
 
   // Distinguish mouse button

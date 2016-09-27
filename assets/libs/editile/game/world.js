@@ -13,6 +13,10 @@ function World (width, height) {
 World.MIN_SIZE = 16
 World.MAX_SIZE = 64
 
+World.prototype.outOfBounds = function (x, y) {
+  return ((x < 0 || x > this._width - 1) || (y < 0 || y > this._height - 1))
+}
+
 World.prototype.selectAll = function () {
   for (let tile of this._tiles) {
     tile.selected = true

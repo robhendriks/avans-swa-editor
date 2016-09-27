@@ -119,6 +119,8 @@ h3.toolbar-title {
     background-position: -24px -87px; }
   .icon.font {
     background-position: -45px -87px; }
+  .icon.flood-fill {
+    background-position: -66px -87px; }
 
 .btn {
   display: inline-block;

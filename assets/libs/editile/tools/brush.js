@@ -65,7 +65,7 @@ Brush.prototype.mouseMove = function (evt, editor) {
     let x = point.x / 32
     let y = point.y / 32
 
-    if ((x >= 0 && x < world.getWidth()) && (y >= 0 && y < world.getHeight())) {
+    if (!world.outOfBounds(x, y)) {
       if (this._prev === null || !this._prev.equals(point)) {
         let tile = world.getTileAt(x, y)
 
