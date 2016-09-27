@@ -9,8 +9,10 @@ Tiles.prototype.id = 'tiles'
 Tiles.prototype.label = 'Tiles'
 Tiles.prototype.zIndex = 3
 
-Tiles.prototype.render = function (ctx, rect, editor) {
+Tiles.prototype.init = function (editor) {
+}
 
+Tiles.prototype.render = function (ctx, rect, editor) {
 }
 
 util.inherits(Tiles, Layer)

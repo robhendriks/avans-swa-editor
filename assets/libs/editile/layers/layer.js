@@ -10,6 +10,10 @@ Layer.prototype.id = undefined
 Layer.prototype.label = undefined
 Layer.prototype.zIndex = undefined
 
+Layer.prototype.init = function (editor) {
+  throw new Error('Layer::init not yet implemented')
+}
+
 Layer.prototype.render = function (ctx, rect, editor) {
   throw new Error('Layer::render not yet implemented')
 }

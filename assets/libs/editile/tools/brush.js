@@ -8,6 +8,15 @@ function Brush () {
 Brush.prototype.id = 'brush'
 Brush.prototype.label = 'Brush'
 
+Brush.prototype.activate = function (editor) {
+  let canvas = editor.getCanvas()
+  canvas.style.cursor = 'crosshair'
+}
+
+Brush.prototype.deactivate = function (editor) {
+  console.log('>deactivate<')
+}
+
 Brush.prototype.mouseDown = function () {
   console.log('>brush down<')
 }

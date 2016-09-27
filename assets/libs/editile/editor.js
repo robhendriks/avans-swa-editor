@@ -13,6 +13,7 @@ function Editor () {
   this._width = 0
   this._height = 0
   this._world = null
+  this._tool = null
 }
 
 Editor.prototype.init = function (options) {
@@ -41,6 +42,7 @@ Editor.prototype._loadLayers = function (layers, callback) {
     if (typeof layer !== 'object') {
       continue
     }
+    layer.init(this)
     this._layers.push(layer)
   }
 
@@ -78,6 +80,10 @@ Editor.prototype._initEditor = function (options) {
     throw new Error('cannot initialize canvas')
   }
 
+  canvas.addEventListener('mousedown', this._mouseDown.bind(this))
+  canvas.addEventListener('mouseup', this._mouseUp.bind(this))
+  canvas.addEventListener('mousemove', this._mouseMove.bind(this))
+
   this._canvas = canvas
   this._context = context
 
@@ -85,10 +91,59 @@ Editor.prototype._initEditor = function (options) {
   let backingStoreRatio = context.backingStorePixelRatio || 1
   this._ratio = devicePixelRatio / backingStoreRatio
 
+  this._initUI()
   window.addEventListener('resize', this._resizeEditor.bind(this))
   this._resizeEditor()
 
   this.emit('ready')
+}
+
+Editor.prototype._initUI = function () {
+  this._initToolUI()
+  this._initZoomUI()
+}
+
+Editor.prototype._initToolUI = function () {
+  let self = this
+  let buttons = document.querySelectorAll('a[data-tool]')
+
+  for (let button of buttons) {
+    button.addEventListener('click', function (evt) {
+      evt.preventDefault()
+
+      buttons.forEach(function (btn) {
+        btn.classList.remove('active')
+      })
+
+      button.classList.add('active')
+      let toolId = button.getAttribute('data-tool')
+      self.selectTool(toolId)
+    })
+  }
+
+  if (buttons.length > 0) {
+    buttons[0].click()
+  }
+}
+
+Editor.prototype._initZoomUI = function () {
+  let buttons = document.querySelectorAll('a[data-zoom]')
+  for (let button of buttons) {
+    let zoom = button.getAttribute('data-zoom')
+
+    switch (zoom) {
+      case 'in': this._wrapClick(button, this.zoomIn.bind(this)); break
+      case 'out': this._wrapClick(button, this.zoomOut.bind(this)); break
+      default: this._wrapClick(button, this.resetZoom.bind(this)); break
+    }
+  }
+}
+
+Editor.prototype._wrapClick = function (elem, fn) {
+  elem.addEventListener('click', function (evt) {
+    evt.preventDefault()
+    fn()
+  })
 }
 
 Editor.prototype._resizeEditor = function (evt) {
@@ -107,9 +162,23 @@ Editor.prototype._resizeEditor = function (evt) {
   this.invalidate()
 }
 
+Editor.prototype._mouseDown = function (evt) {
+}
+
+Editor.prototype._mouseUp = function (evt) {
+}
+
+Editor.prototype._mouseMove = function (evt) {
+}
+
 Editor.prototype.invalidate = function () {
   this.render()
-  // TODO: ? moar shait
+}
+
+Editor.prototype.updateLayers = function () {
+  for (let i = 0; i < this._layers.length; i++) {
+    this._layers[i].emit('update', this)
+  }
 }
 
 Editor.prototype.render = function () {
@@ -165,6 +234,27 @@ Editor.prototype.zoomIn = function () {
   this.invalidate()
 }
 
+Editor.prototype.selectTool = function (toolId) {
+  let tool = this.getTool(toolId)
+  if (!tool) {
+    throw new Error('invalid tool ID')
+  }
+  if (this._tool) {
+    this._tool.deactivate(this)
+  }
+  this._tool = tool
+  this._tool.activate(this)
+}
+
+Editor.prototype.getTool = function (toolId) {
+  for (let tool of this._tools) {
+    if (tool.id === toolId) {
+      return tool
+    }
+  }
+  return false
+}
+
 Editor.prototype.getTools = function () {
   return this._tools
 }
@@ -173,12 +263,21 @@ Editor.prototype.getLayers = function () {
   return this._layers
 }
 
+Editor.prototype.getCanvas = function () {
+  return this._canvas
+}
+
+Editor.prototype.getContext = function () {
+  return this._context
+}
+
 Editor.prototype.getWorld = function () {
   return this._world
 }
 
 Editor.prototype.setWorld = function (newValue) {
   this._world = newValue
+  this.updateLayers()
   this.invalidate()
 }
 

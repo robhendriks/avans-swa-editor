@@ -18,25 +18,6 @@ editor.init({
 })
 
 editor.on('ready', function () {
-  let zoomReset = document.getElementById('zoomReset')
-  let zoomOut = document.getElementById('zoomOut')
-  let zoomIn = document.getElementById('zoomIn')
-
-  zoomReset.addEventListener('click', function (evt) {
-    evt.preventDefault()
-    editor.resetZoom()
-  })
-
-  zoomOut.addEventListener('click', function (evt) {
-    evt.preventDefault()
-    editor.zoomOut()
-  })
-
-  zoomIn.addEventListener('click', function (evt) {
-    evt.preventDefault()
-    editor.zoomIn()
-  })
-
   this.setWorld(new editile.World())
 })
 
