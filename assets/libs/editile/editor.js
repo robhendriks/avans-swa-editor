@@ -62,6 +62,7 @@ Editor.prototype._loadLayers = function (layers, callback) {
       continue
     }
     layer.init(this)
+    layer.on('visibility changed', this.invalidate.bind(this, true))
     this._layers.push(layer)
   }
 
@@ -120,6 +121,7 @@ Editor.prototype._initEditor = function (options) {
 Editor.prototype._initUI = function () {
   this._initToolUI()
   this._initZoomUI()
+  this._initLayerUI()
 }
 
 Editor.prototype._initToolUI = function () {
@@ -167,6 +169,26 @@ Editor.prototype._wrapClick = function (elem, fn) {
     evt.preventDefault()
     fn()
   })
+}
+
+Editor.prototype._initLayerUI = function () {
+  let buttons = document.querySelectorAll('a[data-layer]')
+  for (let button of buttons) {
+    let layerId = button.getAttribute('data-layer')
+    let layer
+    if (!(layer = this.getLayer(layerId))) {
+      throw new Error('unknown layer ID: ' + layerId)
+    }
+    if (layer.isVisible()) {
+      button.classList.add('active')
+    }
+    let self = this
+    button.addEventListener('click', function (evt) {
+      evt.preventDefault()
+      layer.setVisible(!layer.isVisible())
+      button.classList.toggle('active')
+    })
+  }
 }
 
 Editor.prototype._resizeEditor = function (evt) {
@@ -247,7 +269,15 @@ Editor.prototype.render = function () {
 
     for (let i = 0; i < this._layers.length; i++) {
       let layer = this._layers[i]
-      layer.render(ctx, rect, this)
+      if (layer.isVisible()) {
+        if (!layer.isRelative()) {
+          ctx.translate(-x, -y)
+        }
+        layer.render(ctx, rect, this)
+        if (!layer.isRelative()) {
+          ctx.translate(x, y)
+        }
+      }
     }
 
     if (this._tool) {
@@ -298,6 +328,15 @@ Editor.prototype.getTool = function (toolId) {
 
 Editor.prototype.getTools = function () {
   return this._tools
+}
+
+Editor.prototype.getLayer = function (layerId) {
+  for (let layer of this._layers) {
+    if (layer.id === layerId) {
+      return layer
+    }
+  }
+  return false
 }
 
 Editor.prototype.getLayers = function () {

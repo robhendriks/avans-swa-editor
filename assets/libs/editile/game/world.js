@@ -38,6 +38,10 @@ World.prototype.getScreenHeight = function () {
   return this._height * Tile.HEIGHT
 }
 
+World.prototype.toString = function () {
+  return 'World{width=' + this._width + ', height=' + this._height + '}'
+}
+
 util.inherits(World, EventEmitter)
 
 exports.World = World

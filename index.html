@@ -8,23 +8,36 @@
   <div id="app">
     <aside id="toolbar">
       <div class="toolbar-scroll">
+
         <h3 class="toolbar-title">File:</h3>
         <div class="btns vertical fw">
           <a href="#" class="btn" title="Open World"><i class="icon folder to-left"></i> Open</a>
           <a href="#" class="btn" title="New World"><i class="icon new to-left"></i> New</a>
           <a href="#" class="btn" title="Save World"><i class="icon check to-left"></i> Save</a>
         </div>
+
         <h3 class="toolbar-title">Tool:</h3>
         <div class="btns justified fw">
           <a href="#" class="btn toggle" title="Hand" data-tool="hand"><i class="icon hand"></i></a>
           <a href="#" class="btn toggle" title="Brush" data-tool="brush"><i class="icon brush"></i></a>
         </div>
+
+        <h3 class="toolbar-title">Layers:</h3>
+        <div class="btns justified fw">
+          <a class="btn toggle" title="Stats" data-layer="stats"><i class="icon font"></i></a>
+          <a class="btn toggle" title="Grid" data-layer="grid"><i class="icon grid"></i></a>
+          <a class="btn toggle" title="Axes" data-layer="axes"><i class="icon axes"></i></a>
+          <a class="btn toggle" title="Tiles"><i class="icon plane"></i></a>
+          <a class="btn toggle" title="Objects"><i class="icon cube"></i></a>
+        </div>
+
         <h3 class="toolbar-title">Zoom:</h3>
         <div class="btns justified fw">
           <a href="#" class="btn" title="Reset Zoom" data-zoom="reset"><i class="icon reset-zoom"></i></a>
           <a href="#" class="btn" title="Zoom Out" data-zoom="out"><i class="icon zoom-out"></i></a>
           <a href="#" class="btn" title="Zoom In" data-zoom="in"><i class="icon zoom-in"></i></a>
         </div>
+
       </div>
     </aside>
     <main id="content">

@@ -2,8 +2,6 @@ const util = require('util')
 const Layer = require('./layer').Layer
 const Tile = require('../game/tile').Tile
 
-const sprites = require('../game/sprite').sprites
-
 function Axes () {
   Layer.call(this)
   this.on('update', this.update.bind(this))

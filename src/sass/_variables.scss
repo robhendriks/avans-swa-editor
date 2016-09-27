@@ -16,14 +16,16 @@ $toggle-background-color-selected: #5680C2;
 $icon-size: 16px;
 $icon-image: url(../images/icons.png);
 $icon-image-hdpi: url(../images/icons@2x.png);
-$icon-image-size: 85px;
+$icon-image-width: 85px;
+$icon-image-height: 106px;
 $icon-offset: 3px;
 $icon-margin: 5px;
 $icons: (
   folder, file, new, check,
   plane, cube, circle, monkey,
   cursor, hand, eraser, pencil,
-  brush, reset-zoom, zoom-in, zoom-out
+  brush, reset-zoom, zoom-in, zoom-out,
+  axes, grid, font
 );
 
 /* GENERAL */

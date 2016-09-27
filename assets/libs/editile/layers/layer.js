@@ -4,6 +4,7 @@ const EventEmitter = require('events').EventEmitter
 function Layer () {
   EventEmitter.call(this)
   this._visible = true
+  this._relative = true
 }
 
 Layer.prototype.id = undefined
@@ -18,13 +19,21 @@ Layer.prototype.render = function (ctx, rect, editor) {
   throw new Error('Layer::render not yet implemented')
 }
 
-Layer.prototype.getVisible = function () {
+Layer.prototype.isVisible = function () {
   return this._visible
 }
 
 Layer.prototype.setVisible = function (newValue) {
   this._visible = newValue
-  this.emit('update')
+  this.emit('visibility changed')
+}
+
+Layer.prototype.isRelative = function () {
+  return this._relative
+}
+
+Layer.prototype.setRelative = function (newValue) {
+  this._relative = newValue
 }
 
 util.inherits(Layer, EventEmitter)

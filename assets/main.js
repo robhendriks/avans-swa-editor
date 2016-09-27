@@ -11,6 +11,7 @@ editor.init({
     new editile.layers.Grid(),
     new editile.layers.Axes(),
     new editile.layers.Tiles(),
+    new editile.layers.Stats()
   ],
   sprites: [
     new editile.Sprite(0, 'assets/images/tiles.png', 4, 4)
@@ -18,7 +19,7 @@ editor.init({
 })
 
 editor.on('ready', function () {
-  this.setWorld(new editile.World())
+  this.setWorld(new editile.World(16, 16))
 })
 
 window.editor = editor

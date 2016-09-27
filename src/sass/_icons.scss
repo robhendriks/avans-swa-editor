@@ -6,7 +6,7 @@
   height: $icon-size;
   background-image: $icon-image;
   background-repeat: none;
-  background-size: $icon-image-size $icon-image-size;
+  background-size: $icon-image-width $icon-image-height;
 
   @media
   (min-device-pixel-ratio: 1.25),

@@ -10,6 +10,13 @@ function Brush () {
 Brush.prototype.id = 'brush'
 Brush.prototype.label = 'Brush'
 
+Brush.prototype._addPoint = function (point) {
+  if (this._points.length >= 20) {
+    this._points.shift()
+  }
+  this._points.push(point)
+}
+
 Brush.prototype.activate = function (editor) {
   let canvas = editor.getCanvas()
   canvas.style.cursor = 'crosshair'
@@ -41,8 +48,10 @@ Brush.prototype.mouseMove = function (evt, editor) {
   if (!this._dragging || !this._points) {
     return
   }
+
   let point = editor.transformInput(evt)
-  this._points.push(point)
+  this._addPoint(point)
+
   editor.invalidate(true)
 }
 
@@ -50,7 +59,7 @@ Brush.prototype.render = function (ctx) {
   ctx.strokeStyle = 'rgba(255, 255, 255, .5)'
   ctx.lineJoin = 'round'
   ctx.lineCap = 'round'
-  ctx.lineWidth = 10
+  ctx.lineWidth = 5
 
   ctx.beginPath()
 
