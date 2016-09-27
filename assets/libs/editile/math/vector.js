@@ -35,6 +35,10 @@ Vector.prototype.copy = function (v) {
   return this
 }
 
+Vector.prototype.equals = function (v) {
+  return ((v.x === this.x) && (v.y === this.y))
+}
+
 Vector.prototype.add = function (v) {
   this.x += v.x
   this.y += v.y

@@ -7,6 +7,7 @@ function World (width, height) {
   EventEmitter.call(this)
   this.setWidth(width || World.MIN_SIZE)
   this.setHeight(height || World.MIN_SIZE)
+  this._tiles = []
 }
 
 World.MIN_SIZE = 16
@@ -36,6 +37,27 @@ World.prototype.getScreenWidth = function () {
 
 World.prototype.getScreenHeight = function () {
   return this._height * Tile.HEIGHT
+}
+
+World.prototype.addTile = function (x, y, type) {
+  this._tiles.push(new Tile(x, y, type))
+}
+
+World.prototype.getTileAt = function (x, y) {
+  for (let i = 0, il = this._tiles.length; i < il; i++) {
+    let tile = this._tiles[i]
+    if (tile.x === x && tile.y === y) {
+      return tile
+    }
+  }
+}
+
+World.prototype.getTiles = function () {
+  return this._tiles
+}
+
+World.prototype.setTiles = function (newValue) {
+  this._tiles = newValue || []
 }
 
 World.prototype.toString = function () {

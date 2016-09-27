@@ -2,6 +2,7 @@ const util = require('util')
 const async = require('async')
 const EventEmitter = require('events').EventEmitter
 const Vector = require('./math/vector').Vector
+const Tile = require('./game/tile').Tile
 
 function Editor () {
   EventEmitter.call(this)
@@ -33,6 +34,12 @@ Editor.prototype.transformInput = function (evt) {
   return new Vector(
     Math.round((input.x - this._x * zoom) / zoom),
     Math.round((input.y - this._y * zoom) / zoom))
+}
+
+Editor.prototype.snapInput = function (evt) {
+  return new Vector(
+    Tile.WIDTH * Math.floor((evt.x / Tile.WIDTH)),
+    Tile.HEIGHT * Math.floor((evt.y / Tile.HEIGHT)))
 }
 
 Editor.prototype.init = function (options) {
@@ -257,8 +264,8 @@ Editor.prototype.render = function () {
     let w = this._width
     let h = this._height
 
-    let x = this._x = (w / 2 - world.getScreenWidth() * s / 2) / s
-    let y = this._y = (h / 2 - world.getScreenHeight() * s / 2) / s
+    let x = Math.round(this._x = (w / 2 - world.getScreenWidth() * s / 2) / s)
+    let y = Math.round(this._y = (h / 2 - world.getScreenHeight() * s / 2) / s)
 
     ctx.save()
     ctx.translate(x, y)

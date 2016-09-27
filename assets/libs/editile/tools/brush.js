@@ -5,6 +5,7 @@ function Brush () {
   Tool.call(this)
   this._dragging = null
   this._points = []
+  this._prev = null
 }
 
 Brush.prototype.id = 'brush'
@@ -23,7 +24,6 @@ Brush.prototype.activate = function (editor) {
 }
 
 Brush.prototype.deactivate = function (editor) {
-  console.log('>deactivate<')
 }
 
 Brush.prototype.mouseDown = function (evt, editor) {
@@ -40,6 +40,7 @@ Brush.prototype.mouseUp = function (evt, editor) {
   }
   this._dragging = false
   this._points = []
+  this._prev = null
 
   editor.invalidate(true)
 }
@@ -51,6 +52,22 @@ Brush.prototype.mouseMove = function (evt, editor) {
 
   let point = editor.transformInput(evt)
   this._addPoint(point)
+
+  let world
+  if ((world = editor.getWorld()) !== null) {
+    let point = editor.snapInput(editor.transformInput(evt))
+    let x = point.x / 32
+    let y = point.y / 32
+
+    if ((x >= 0 && x <= world.getWidth()) && (y >= 0 && x <= world.getHeight())) {
+      let tile = world.getTileAt(x, y)
+      if (tile && (this._prev === null || !this._prev.equals(point))) {
+        tile.type = 12
+        this._prev = point
+        console.log('ayy')
+      }
+    }
+  }
 
   editor.invalidate(true)
 }

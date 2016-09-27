@@ -5,7 +5,8 @@ editor.init({
   selector: '#editor',
   tools: [
     new editile.tools.Hand(),
-    new editile.tools.Brush()
+    new editile.tools.Brush(),
+    new editile.tools.Pencil()
   ],
   layers: [
     new editile.layers.Grid(),
@@ -14,12 +15,20 @@ editor.init({
     new editile.layers.Stats()
   ],
   sprites: [
-    new editile.Sprite(0, 'assets/images/tiles.png', 4, 4)
+    new editile.Sprite('a', 'assets/images/tiles.png', 4, 4)
   ]
 })
 
 editor.on('ready', function () {
-  this.setWorld(new editile.World(16, 16))
+  let world = new editile.World()
+
+  for (let y = 0; y < 16; y++) {
+    for (let x = 0; x < 16; x++) {
+      world.addTile(x, y, 1)
+    }
+  }
+
+  this.setWorld(world)
 })
 
 window.editor = editor
