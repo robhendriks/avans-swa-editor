@@ -177,7 +177,8 @@ Editor.prototype._initLayerUI = function () {
     let layerId = button.getAttribute('data-layer')
     let layer
     if (!(layer = this.getLayer(layerId))) {
-      throw new Error('unknown layer ID: ' + layerId)
+      console.warn('invalid layer ID:', layerId)
+      continue
     }
     if (layer.isVisible()) {
       button.classList.add('active')
@@ -308,7 +309,8 @@ Editor.prototype.zoomIn = function () {
 Editor.prototype.setTool = function (toolId) {
   let tool = this.getTool(toolId)
   if (!tool) {
-    throw new Error('invalid tool ID')
+    console.warn('invalid tool ID:', toolId)
+    return
   }
   if (this._tool) {
     this._tool.deactivate(this)
