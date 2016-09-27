@@ -65,7 +65,7 @@
   }
 
   &.justified {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
 
     .btn {

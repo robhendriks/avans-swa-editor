@@ -18,7 +18,10 @@
     "url": "https://github.com/robhendriks/editile/issues"
   },
   "homepage": "https://github.com/robhendriks/editile",
-  "dependencies": {},
+  "dependencies": {
+    "async": "^2.0.1",
+    "jquery": "^3.1.1"
+  },
   "devDependencies": {
     "del": "^2.2.2",
     "electron": "^1.4.1",

@@ -8,31 +8,31 @@
   <div id="app">
     <aside id="toolbar">
       <div class="toolbar-scroll">
-        <div class="btns vertical" style="width: 100%;">
-          <a href="#" class="btn"><i class="icon folder to-left"></i> Open</a>
-          <a href="#" class="btn"><i class="icon new to-left"></i> New</a>
-          <a href="#" class="btn"><i class="icon check to-left"></i> Save</a>
+        <h3 class="toolbar-title">File:</h3>
+        <div class="btns vertical fw">
+          <a href="#" class="btn" title="Open World"><i class="icon folder to-left"></i> Open</a>
+          <a href="#" class="btn" title="New World"><i class="icon new to-left"></i> New</a>
+          <a href="#" class="btn" title="Save World"><i class="icon check to-left"></i> Save</a>
         </div>
-        <br>
-        <div class="btns vertical" style="width: 100%;">
-          <a href="#" class="btn"><i class="icon plane to-left"></i> Tile</a>
-          <a href="#" class="btn"><i class="icon cube to-left"></i> Object</a>
-          <a href="#" class="btn"><i class="icon monkey to-left"></i> Entity</a>
+        <h3 class="toolbar-title">Tool:</h3>
+        <div class="btns justified fw">
+          <a href="#" class="btn toggle" title="Hand" data-tool="hand"><i class="icon hand"></i></a>
+          <a href="#" class="btn toggle" title="Brush" data-tool="brush"><i class="icon brush"></i></a>
         </div>
-        <br>
-        <div class="btns justified">
-          <a href="#" class="btn toggle active">A</a>
-          <a href="#" class="btn toggle">B</a>
-          <a href="#" class="btn toggle">C</a>
+        <h3 class="toolbar-title">Zoom:</h3>
+        <div class="btns justified fw">
+          <a href="#" class="btn" id="zoomReset" title="Reset Zoom"><i class="icon reset-zoom"></i></a>
+          <a href="#" class="btn" id="zoomOut" title="Zoom Out"><i class="icon zoom-out"></i></a>
+          <a href="#" class="btn" id="zoomIn" title="Zoom In"><i class="icon zoom-in"></i></a>
         </div>
       </div>
     </aside>
     <main id="content">
-      <canvas id="canvas"></canvas>
+      <canvas id="editor"></canvas>
     </main>
   </div>
   <script>
-    require('./assets/canvas');
+    require('./assets/main')
   </script>
 </body>
 </html>
