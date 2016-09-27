@@ -17,12 +17,13 @@ Brush.prototype.deactivate = function (editor) {
   console.log('>deactivate<')
 }
 
-Brush.prototype.mouseDown = function () {
-  console.log('>brush down<')
+Brush.prototype.mouseDown = function (evt, editor) {
 }
 
-Brush.prototype.mouseUp = function () {
-  console.log('>brush up<')
+Brush.prototype.mouseUp = function (evt, editor) {
+}
+
+Brush.prototype.mouseMove = function (evt, editor) {
 }
 
 util.inherits(Brush, Tool)

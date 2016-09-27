@@ -17,12 +17,16 @@ Hand.prototype.deactivate = function (editor) {
   console.log('>deactivate<')
 }
 
-Hand.prototype.mouseDown = function () {
-  console.log('>hand down<')
+Hand.prototype.mouseDown = function (evt, editor) {
+  let p = editor.transformInput(evt)
+
+  console.log(p)
 }
 
-Hand.prototype.mouseUp = function () {
-  console.log('>hand up<')
+Hand.prototype.mouseUp = function (evt, editor) {
+}
+
+Hand.prototype.mouseMove = function (evt, editor) {
 }
 
 util.inherits(Hand, Tool)

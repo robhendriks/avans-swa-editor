@@ -10,10 +10,29 @@ function Editor () {
   this._context = null
   this._ratio = 0
   this._scale = 1
+  this._x = 0
+  this._y = 0
   this._width = 0
   this._height = 0
   this._world = null
   this._tool = null
+}
+
+Editor.prototype.translateInput = function (evt) {
+  let rect = this._canvas.getBoundingClientRect()
+  return {
+    x: Math.round((evt.clientX - rect.left) / (rect.right - rect.left) * this._width),
+    y: Math.round((evt.clientY - rect.top) / (rect.bottom - rect.top) * this._height)
+  }
+}
+
+Editor.prototype.transformInput = function (evt) {
+  let input = this.translateInput(evt)
+  let zoom = this._ratio * this._scale
+  return {
+    x: Math.round((input.x - this._x * zoom) / zoom),
+    y: Math.round((input.y - this._y * zoom) / zoom)
+  }
 }
 
 Editor.prototype.init = function (options) {
@@ -117,7 +136,7 @@ Editor.prototype._initToolUI = function () {
 
       button.classList.add('active')
       let toolId = button.getAttribute('data-tool')
-      self.selectTool(toolId)
+      self.setTool(toolId)
     })
   }
 
@@ -140,7 +159,11 @@ Editor.prototype._initZoomUI = function () {
 }
 
 Editor.prototype._wrapClick = function (elem, fn) {
+  let self = this
   elem.addEventListener('click', function (evt) {
+    // Hack-a-doodle-doo
+    self._canvas.width = self._canvas.width
+
     evt.preventDefault()
     fn()
   })
@@ -163,12 +186,21 @@ Editor.prototype._resizeEditor = function (evt) {
 }
 
 Editor.prototype._mouseDown = function (evt) {
+  if (this._tool !== null) {
+    this._tool.mouseDown(evt, this)
+  }
 }
 
 Editor.prototype._mouseUp = function (evt) {
+  if (this._tool !== null) {
+    this._tool.mouseUp(evt, this)
+  }
 }
 
 Editor.prototype._mouseMove = function (evt) {
+  if (this._tool !== null) {
+    this._tool.mouseMove(evt, this)
+  }
 }
 
 Editor.prototype.invalidate = function () {
@@ -187,8 +219,6 @@ Editor.prototype.render = function () {
   let r = this._ratio
   let s = this._scale
 
-  ctx.clearRect(0, 0, this._width, this._height)
-
   ctx.save()
   ctx.scale(r * s, r * s)
 
@@ -197,8 +227,8 @@ Editor.prototype.render = function () {
     let w = this._width
     let h = this._height
 
-    let x = (w / 2 - world.getScreenWidth() * s / 2) / s
-    let y = (h / 2 - world.getScreenHeight() * s / 2) / s
+    let x = this._x = (w / 2 - world.getScreenWidth() * s / 2) / s
+    let y = this._y = (h / 2 - world.getScreenHeight() * s / 2) / s
 
     ctx.save()
     ctx.translate(x, y)
@@ -234,7 +264,7 @@ Editor.prototype.zoomIn = function () {
   this.invalidate()
 }
 
-Editor.prototype.selectTool = function (toolId) {
+Editor.prototype.setTool = function (toolId) {
   let tool = this.getTool(toolId)
   if (!tool) {
     throw new Error('invalid tool ID')
