@@ -2,7 +2,7 @@
 
 Simple level editor
 
-![Editile](screenshots/window-thumb.png)
+![Editile](screenshots/demo.gif)
 
 ## API
 

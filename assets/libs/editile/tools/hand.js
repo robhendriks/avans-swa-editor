@@ -51,7 +51,6 @@ Hand.prototype.mouseMove = function (evt, editor) {
     this._dragBegin.clone().min(this._dragEnd),
     this._dragBegin.clone().max(this._dragEnd))
 
-  console.log(this._dragBox)
   editor.invalidate(true)
 }
 
