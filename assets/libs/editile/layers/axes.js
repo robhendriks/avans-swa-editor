@@ -2,6 +2,8 @@ const util = require('util')
 const Layer = require('./layer').Layer
 const Tile = require('../game/tile').Tile
 
+const sprites = require('../game/sprite').sprites
+
 function Axes () {
   Layer.call(this)
 }
@@ -29,7 +31,6 @@ Axes.prototype.render = function (ctx, rect, editor) {
   ctx.moveTo(world.getScreenWidth() / 2, 0)
   ctx.lineTo(world.getScreenWidth() / 2, world.getScreenHeight())
   ctx.stroke()
-
 
   ctx.restore()
 }

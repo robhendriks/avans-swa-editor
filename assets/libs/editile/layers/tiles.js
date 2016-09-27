@@ -9,7 +9,7 @@ Tiles.prototype.id = 'tiles'
 Tiles.prototype.label = 'Tiles'
 Tiles.prototype.zIndex = 3
 
-Tiles.prototype.render = function (ctx, editor) {
+Tiles.prototype.render = function (ctx, rect, editor) {
 
 }
 

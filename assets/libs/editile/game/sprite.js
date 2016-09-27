@@ -1,4 +1,4 @@
-const sprites = window.sprites = {}
+const sprites = exports.sprites = {}
 
 function Sprite (id, src, rows, columns) {
   this._id = id
