@@ -24,4 +24,7 @@ Tool.prototype.mouseMove = function (evt, editor) {
   throw new Error('Tool::mouseMove not yet implemented')
 }
 
+Tool.prototype.render = function (evt, editor) {
+}
+
 exports.Tool = Tool

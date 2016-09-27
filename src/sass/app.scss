@@ -24,6 +24,11 @@ body {
   padding: 0;
 }
 
+#app {
+  cursor: default;
+  @extend %noselect;
+}
+
 #toolbar {
   position: absolute;
   overflow: scroll;

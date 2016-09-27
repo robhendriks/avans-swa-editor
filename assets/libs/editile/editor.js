@@ -1,6 +1,7 @@
 const util = require('util')
 const async = require('async')
 const EventEmitter = require('events').EventEmitter
+const Vector = require('./math/vector').Vector
 
 function Editor () {
   EventEmitter.call(this)
@@ -20,19 +21,18 @@ function Editor () {
 
 Editor.prototype.translateInput = function (evt) {
   let rect = this._canvas.getBoundingClientRect()
-  return {
-    x: Math.round((evt.clientX - rect.left) / (rect.right - rect.left) * this._width),
-    y: Math.round((evt.clientY - rect.top) / (rect.bottom - rect.top) * this._height)
-  }
+  return new Vector(
+    Math.round((evt.clientX - rect.left) / (rect.right - rect.left) * this._width),
+    Math.round((evt.clientY - rect.top) / (rect.bottom - rect.top) * this._height))
 }
 
 Editor.prototype.transformInput = function (evt) {
   let input = this.translateInput(evt)
   let zoom = this._ratio * this._scale
-  return {
-    x: Math.round((input.x - this._x * zoom) / zoom),
-    y: Math.round((input.y - this._y * zoom) / zoom)
-  }
+
+  return new Vector(
+    Math.round((input.x - this._x * zoom) / zoom),
+    Math.round((input.y - this._y * zoom) / zoom))
 }
 
 Editor.prototype.init = function (options) {
@@ -203,7 +203,10 @@ Editor.prototype._mouseMove = function (evt) {
   }
 }
 
-Editor.prototype.invalidate = function () {
+Editor.prototype.invalidate = function (clear) {
+  if (clear === true) {
+    this.clear()
+  }
   this.render()
 }
 
@@ -211,6 +214,10 @@ Editor.prototype.updateLayers = function () {
   for (let i = 0; i < this._layers.length; i++) {
     this._layers[i].emit('update', this)
   }
+}
+
+Editor.prototype.clear = function () {
+  this._context.clearRect(0, 0, this._width, this._height)
 }
 
 Editor.prototype.render = function () {
@@ -241,6 +248,10 @@ Editor.prototype.render = function () {
     for (let i = 0; i < this._layers.length; i++) {
       let layer = this._layers[i]
       layer.render(ctx, rect, this)
+    }
+
+    if (this._tool) {
+      this._tool.render(ctx)
     }
 
     ctx.restore()
