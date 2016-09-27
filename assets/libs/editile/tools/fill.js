@@ -8,12 +8,7 @@ function Fill () {
 
 Fill.prototype.id = 'fill'
 Fill.prototype.label = 'Fill'
-
-Fill.prototype.activate = function (editor) {
-}
-
-Fill.prototype.deactivate = function (editor) {
-}
+Fill.prototype.cursor = ['fill.png', 8, 8]
 
 Fill.prototype._floodFill = function (world, x, y, src, dest) {
   if (src === dest) return

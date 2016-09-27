@@ -13,15 +13,7 @@ function Hand () {
 
 Hand.prototype.id = 'hand'
 Hand.prototype.label = 'Hand'
-
-Hand.prototype.activate = function (editor) {
-  let canvas = editor.getCanvas()
-  canvas.style.cursor = 'pointer'
-}
-
-Hand.prototype.deactivate = function (editor) {
-  console.log('>deactivate<')
-}
+Hand.prototype.cursor = ['hand.png', 5, 0]
 
 Hand.prototype.mouseDown = function (evt, editor) {
   if (this._dragging) {

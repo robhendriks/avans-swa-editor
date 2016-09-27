@@ -9,14 +9,7 @@ function Pencil () {
 
 Pencil.prototype.id = 'pencil'
 Pencil.prototype.label = 'Pencil'
-
-Pencil.prototype.activate = function (editor) {
-  let canvas = editor.getCanvas()
-  canvas.style.cursor = 'crosshair'
-}
-
-Pencil.prototype.deactivate = function (editor) {
-}
+Pencil.prototype.cursor = ['pencil.png', 0, 16]
 
 Pencil.prototype.mouseDown = function (evt, editor) {
   this._point = editor.snapInput(editor.transformInput(evt))

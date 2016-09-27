@@ -11,20 +11,13 @@ function Brush () {
 
 Brush.prototype.id = 'brush'
 Brush.prototype.label = 'Brush'
+Brush.prototype.cursor = ['brush.png', 1, 15]
 
 Brush.prototype._addPoint = function (point) {
   if (this._points.length >= 20) {
     this._points.shift()
   }
   this._points.push(point)
-}
-
-Brush.prototype.activate = function (editor) {
-  let canvas = editor.getCanvas()
-  canvas.style.cursor = 'crosshair'
-}
-
-Brush.prototype.deactivate = function (editor) {
 }
 
 Brush.prototype.mouseDown = function (evt, editor) {

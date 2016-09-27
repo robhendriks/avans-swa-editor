@@ -321,16 +321,54 @@ Editor.prototype.zoomIn = function () {
 }
 
 Editor.prototype.setTool = function (toolId) {
-  let tool = this.getTool(toolId)
-  if (!tool) {
+  let newTool = this.getTool(toolId)
+  if (!newTool) {
     console.warn('invalid tool ID:', toolId)
     return
   }
-  if (this._tool) {
-    this._tool.deactivate(this)
+
+  let oldTool
+  if ((oldTool = this._tool)) {
+    if (oldTool.cursor !== null) {
+      this._canvas.style.cursor = 'auto'
+    }
+    oldTool.deactivate(this)
   }
-  this._tool = tool
-  this._tool.activate(this)
+  this._setToolCursor(newTool)
+  newTool.activate(this)
+  this._tool = newTool
+}
+
+Editor.prototype._setToolCursor = function (tool) {
+  let cursor = tool.cursor
+  if (cursor === null) {
+    return
+  }
+
+  let src, x, y
+  src = x = y = null
+
+  if (Array.isArray(cursor)) {
+    src = cursor[0] || 'default.png'
+    x = cursor[1] || 0
+    y = cursor[2] || 0
+  } else if (typeof cursor === 'string') {
+    src = cursor
+  } else {
+    console.warn('invalid cusor for tool \'%s\'', tool.id)
+    return
+  }
+
+  let css = 'url(assets/images/cursors/'
+  css += src + ')'
+
+  if (x !== null && y !== null) {
+    css += ' ' + x
+    css += ' ' + y
+  }
+  css += ', auto'
+
+  this._canvas.style.cursor = css
 }
 
 Editor.prototype.getTool = function (toolId) {
