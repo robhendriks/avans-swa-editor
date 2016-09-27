@@ -297,7 +297,7 @@ Editor.prototype.resetZoom = function () {
 }
 
 Editor.prototype.zoomOut = function () {
-  this._scale = Math.max(this._scale - .125, .5)
+  this._scale = Math.max(this._scale - .25, .5)
   this.invalidate()
 }
 
@@ -361,6 +361,14 @@ Editor.prototype.setWorld = function (newValue) {
   this._world = newValue
   this.updateLayers()
   this.invalidate()
+}
+
+Editor.prototype.getScale = function () {
+  return this._scale
+}
+
+Editor.prototype.getScalePercent = function () {
+  return Math.round(100.0 * this._scale)
 }
 
 util.inherits(Editor, EventEmitter)

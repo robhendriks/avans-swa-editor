@@ -56,10 +56,10 @@ Brush.prototype.mouseMove = function (evt, editor) {
 }
 
 Brush.prototype.render = function (ctx) {
-  ctx.strokeStyle = 'rgba(255, 255, 255, .5)'
+  ctx.strokeStyle = 'rgba(255, 255, 255, .1)'
   ctx.lineJoin = 'round'
   ctx.lineCap = 'round'
-  ctx.lineWidth = 5
+  ctx.lineWidth = 8
 
   ctx.beginPath()
 

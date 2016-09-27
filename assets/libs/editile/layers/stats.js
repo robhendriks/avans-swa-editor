@@ -23,7 +23,18 @@ Stats.prototype.render = function (ctx, rect, editor) {
   ctx.font = '16px Open Sans'
   ctx.fillStyle = '#4a4a4a'
 
-  let str = world.getWidth() + 'x' + world.getHeight()
+  let str = ''
+
+  /* World dimensions */
+  str += world.getWidth()
+  str += 'x'
+  str += world.getHeight()
+
+  /* Zoom level */
+  str += ' ('
+  str += editor.getScalePercent()
+  str += '%)'
+
   ctx.fillText(str, 8, 22)
 }
 
