@@ -1,5 +1,7 @@
 const electron = require('electron')
 const app = electron.app
+const ipc = electron.ipcMain
+const dialog = electron.dialog
 const BrowserWindow = electron.BrowserWindow
 
 let mainWindow
@@ -32,4 +34,28 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+
+ipc.on('open-file-dialog', function (event) {
+  dialog.showOpenDialog(mainWindow, {
+    title: 'Open World',
+    filters: [
+      {name: 'JSON', extensions: ['json']}
+    ],
+    properties: ['openFile']
+  }, function (files) {
+    if (files) event.sender.send('open-file-done', files)
+  })
+})
+
+ipc.on('save-file-dialog', function (event) {
+  dialog.showSaveDialog(mainWindow, {
+    title: 'Save World',
+    filters: [
+      {name: 'JSON', extensions: ['json']}
+    ]
+  }, function (files) {
+    if (files) event.sender.send('save-file-done', files)
+  })
 })
