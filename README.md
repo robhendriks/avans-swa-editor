@@ -2,7 +2,21 @@
 
 Simple level editor
 
-![Editile](screenshots/demo.gif)
+## Features
+
+### Tools
+
+#### Pencil
+
+![Editile](screenshots/demo-pencil.gif)
+
+#### Brush
+
+![Editile](screenshots/demo-brush.gif)
+
+#### Flood Fill
+
+![Editile](screenshots/demo-flood-fill.gif)
 
 ## API
 
