@@ -17,7 +17,9 @@ function Editor () {
   this._x = 0
   this._y = 0
   this._width = 0
+  this._screenWidth = 0
   this._height = 0
+  this._screenHeight = 0
   this._world = null
   this._tool = null
   this._materials = null
@@ -252,8 +254,8 @@ Editor.prototype._resizeEditor = function (evt) {
   let width = this._width = parent.clientWidth
   let height = this._height = parent.clientHeight
 
-  canvas.width = width * this._ratio
-  canvas.height = height * this._ratio
+  this._screenWidth = canvas.width = width * this._ratio
+  this._screenHeight = canvas.height = height * this._ratio
 
   canvas.style.width = width + 'px'
   canvas.style.height = height + 'px'
@@ -293,7 +295,7 @@ Editor.prototype.updateLayers = function () {
 }
 
 Editor.prototype.clear = function () {
-  this._context.clearRect(0, 0, this._width, this._height)
+  this._context.clearRect(0, 0, this._screenWidth, this._screenHeight)
 }
 
 Editor.prototype.render = function () {
@@ -323,6 +325,8 @@ Editor.prototype.render = function () {
         // Scale layer if requested
         if (layer.isScalable()) {
           ctx.scale(r * s, r * s)
+        } else {
+          ctx.scale(r, r);
         }
 
         // Translate layer if requested

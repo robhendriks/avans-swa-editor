@@ -21,7 +21,7 @@ Stats.prototype.render = function (ctx, rect, editor) {
     return
   }
 
-  ctx.font = '16px Open Sans'
+  ctx.font = '16px bfont'
   ctx.fillStyle = '#4a4a4a'
 
   let str = ''

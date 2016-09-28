@@ -17,7 +17,8 @@ body,
 }
 
 html {
-  background-color: $background-color;
+  // background-color: $background-color;
+  @include shade-selected(darken($toggle-background-color, 10%), 10%, 0);
 }
 
 body {

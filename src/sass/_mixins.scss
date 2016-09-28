@@ -1,9 +1,9 @@
-@mixin shade($color) {
-  background: linear-gradient(lighten($color, 5%), darken($color, 5%));
+@mixin shade($color, $factor-a: 5%, $factor-b: 5%) {
+  background: linear-gradient(lighten($color, $factor-a), darken($color, $factor-b));
 }
 
-@mixin shade-selected($color) {
-  background: linear-gradient(darken($color, 5%), lighten($color, 5%));
+@mixin shade-selected($color, $factor-a: 5%, $factor-b: 5%) {
+  background: linear-gradient(darken($color, $factor-a), lighten($color, $factor-b));
 }
 
 @mixin hdpi() {

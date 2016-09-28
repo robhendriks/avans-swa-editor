@@ -42,7 +42,6 @@ Brush.prototype.mouseUp = function (evt, editor) {
   this._points = []
   this._prev = null
 
-  clearTimeout(this._timer)
   editor.invalidate(true)
 }
 
@@ -101,7 +100,6 @@ Brush.prototype.render = function (ctx) {
     }
   }
 
-  ctx.closePath()
   ctx.stroke()
 }
 
