@@ -33,11 +33,11 @@ Editor.prototype.translateInput = function (evt) {
 
 Editor.prototype.transformInput = function (evt) {
   let input = this.translateInput(evt)
-  let zoom = this._ratio * this._scale
+  let scale = this._scale
 
   return new Vector(
-    Math.round((input.x - this._x * zoom) / zoom),
-    Math.round((input.y - this._y * zoom) / zoom))
+    Math.round((input.x - this._x * scale) / scale),
+    Math.round((input.y - this._y * scale) / scale))
 }
 
 Editor.prototype.snapInput = function (evt) {
@@ -302,9 +302,6 @@ Editor.prototype.render = function () {
   let r = this._ratio
   let s = this._scale
 
-  ctx.save()
-  ctx.scale(r, r)
-
   let world
   if ((world = this._world) !== null) {
     let w = this._width
@@ -321,11 +318,11 @@ Editor.prototype.render = function () {
     for (let i = 0; i < this._layers.length; i++) {
       let layer = this._layers[i]
       if (layer.isVisible()) {
-        ctx.save()
+        ctx.resetTransform()
 
         // Scale layer if requested
         if (layer.isScalable()) {
-          ctx.scale(s, s)
+          ctx.scale(r * s, r * s)
         }
 
         // Translate layer if requested
@@ -334,20 +331,19 @@ Editor.prototype.render = function () {
         }
 
         layer.render(ctx, rect, this)
-        ctx.restore()
       }
     }
 
-    ctx.save()
-    ctx.scale(s, s)
+    ctx.resetTransform()
+
+    ctx.scale(r * s, r * s)
     ctx.translate(x, y)
 
     if (this._tool) {
       this._tool.render(ctx)
     }
 
-    ctx.restore()
-    ctx.restore()
+    ctx.resetTransform()
   }
 }
 
