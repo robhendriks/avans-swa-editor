@@ -4,6 +4,7 @@
 @import 'typography';
 @import 'icons';
 @import 'buttons';
+@import 'picker';
 
 * {
   box-sizing: border-box;
@@ -22,6 +23,8 @@ html {
 body {
   margin: 0;
   padding: 0;
+
+  -webkit-font-smoothing: antialiased;
 }
 
 #app {

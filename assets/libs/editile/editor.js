@@ -1,5 +1,7 @@
 const util = require('util')
 const async = require('async')
+const tileCase = require('title-case')
+
 const EventEmitter = require('events').EventEmitter
 const Vector = require('./math/vector').Vector
 const Tile = require('./game/tile').Tile
@@ -18,6 +20,8 @@ function Editor () {
   this._height = 0
   this._world = null
   this._tool = null
+  this._materials = null
+  this._material = null
 }
 
 Editor.prototype.translateInput = function (evt) {
@@ -118,15 +122,16 @@ Editor.prototype._initEditor = function (options) {
   let backingStoreRatio = context.backingStorePixelRatio || 1
   this._ratio = devicePixelRatio / backingStoreRatio
 
-  this._initUI()
+  this._initUI(options)
   window.addEventListener('resize', this._resizeEditor.bind(this))
   this._resizeEditor()
 
   this.emit('ready')
 }
 
-Editor.prototype._initUI = function () {
+Editor.prototype._initUI = function (options) {
   this._initToolUI()
+  this._initMaterialUI(options)
   this._initZoomUI()
   this._initLayerUI()
 }
@@ -151,6 +156,47 @@ Editor.prototype._initToolUI = function () {
 
   if (buttons.length > 0) {
     buttons[0].click()
+  }
+}
+
+Editor.prototype._initMaterialUI = function (options) {
+  let materials = this._materials = options['materials'] || []
+
+  let elem = document.getElementById('materials')
+  let list = document.createElement('ul')
+
+  for (let material of materials) {
+    let listItem = document.createElement('li')
+    listItem.setAttribute('data-material', material)
+
+    let anchor = document.createElement('a')
+    anchor.setAttribute('href', '#')
+
+    let text = document.createTextNode(tileCase(material))
+    let icon = document.createElement('i')
+    icon.className = 'tile ' + material
+
+    let self = this
+
+    anchor.addEventListener('click', function (evt) {
+      evt.preventDefault()
+
+      let parent = this.parentNode
+      let attr = parent.getAttribute('data-material')
+
+      self.setMaterial(attr)
+    })
+
+    anchor.appendChild(icon)
+    anchor.appendChild(text)
+    listItem.appendChild(anchor)
+    list.appendChild(listItem)
+  }
+
+  elem.appendChild(list)
+
+  if (materials.length > 0) {
+    this.setMaterial(materials[0])
   }
 }
 
@@ -343,6 +389,9 @@ Editor.prototype._setToolCursor = function (tool) {
   let cursor = tool.cursor
   if (cursor === null) {
     return
+  } else if (tool._cursorCache) {
+    this._canvas.style.cursor = tool._cursorCache
+    return
   }
 
   let src, x, y
@@ -368,6 +417,7 @@ Editor.prototype._setToolCursor = function (tool) {
   }
   css += ', auto'
 
+  tool._cursorCache = css
   this._canvas.style.cursor = css
 }
 
@@ -421,6 +471,47 @@ Editor.prototype.getScale = function () {
 
 Editor.prototype.getScalePercent = function () {
   return Math.round(100.0 * this._scale)
+}
+
+Editor.prototype.getMaterials = function () {
+  return this._materials
+}
+
+Editor.prototype.getMaterial = function (id) {
+  let index = this._materials.indexOf(id)
+  if (index !== -1) {
+    return {
+      id: id,
+      index: index
+    }
+  }
+  return null
+}
+
+Editor.prototype.getActiveMaterial = function () {
+  return this._material
+}
+
+Editor.prototype.setMaterial = function (id) {
+  let mat = this.getMaterial(id)
+  if (mat === null) {
+    console.warn('invalid material id:', id)
+    return
+  }
+
+  let nodes = document.querySelectorAll('li[data-material]')
+  if (nodes) {
+    for (let node of nodes) {
+      let attr = node.getAttribute('data-material')
+      if (attr === id) {
+        node.classList.add('active')
+      } else {
+        node.classList.remove('active')
+      }
+    }
+  }
+
+  this._material = mat
 }
 
 util.inherits(Editor, EventEmitter)

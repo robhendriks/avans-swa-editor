@@ -35,11 +35,15 @@
       @include shade-selected($toggle-background-color-selected);
     }
   }
+
+  > i.icon, i.tile {
+    top: 2px;
+  }
 }
 
 .btns {
   display: inline-block;
-  margin: 5px 0;
+  margin: 5px 0 10px 0;
 
   &.horizontal .btn,
   &.justified .btn {

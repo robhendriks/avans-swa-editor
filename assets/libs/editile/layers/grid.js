@@ -9,7 +9,7 @@ function Grid () {
 
 Grid.prototype.id = 'grid'
 Grid.prototype.label = 'Grid'
-Grid.prototype.zIndex = 0
+Grid.prototype.zIndex = 2
 
 Grid.prototype.init = function (editor) {
   let canvas = document.createElement('canvas')

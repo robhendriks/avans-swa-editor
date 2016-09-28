@@ -1,26 +1,57 @@
-.icon {
+@mixin iconize(
+  $dest-width,
+  $dest-height,
+  $src,
+  $src-width,
+  $src-height,
+  $src-columns,
+  $src-x: 0,
+  $src-y: 0,
+  $src-space-x: 0,
+  $src-space-y: 0,
+  $classes: ()) {
   position: relative;
-  top: 2px;
   display: inline-block;
-  width: $icon-size;
-  height: $icon-size;
-  background-image: $icon-image;
-  background-repeat: none;
-  background-size: $icon-image-width $icon-image-height;
+  height: $dest-height;
+  width: $dest-width;
 
-  @media
-  (min-device-pixel-ratio: 1.25),
-  (min-resolution: 120dpi) {
-    background-image: $icon-image-hdpi;
-  }
+  background-image: url($src);
+  background-repeat: no-repeat;
+  background-size: $src-width $src-height;
 
-  @each $icon in $icons {
-    $i: index($icons, $icon) - 1;
-    $y: floor($i / 4);
-    $x: $i % 4;
+  @each $class in $classes {
+    $i: index($classes, $class) - 1;
 
-    &.#{$icon} {
-      background-position: (-($icon-offset + $x * ($icon-size + $icon-margin))) (-($icon-offset + $y * ($icon-size + $icon-margin)));
+    $row: floor($i / $src-columns);
+    $col: $i % $src-columns;
+
+    &.#{$class} {
+      $x: $src-x + $col * ($dest-width + $src-space-x);
+      $y: $src-y + $row * ($dest-height + $src-space-y);
+      background-position: -#{$x} -#{$y};
     }
   }
+}
+
+.icon {
+  @include iconize(
+    $icon-dest-width, $icon-dest-height,
+    $icon-src, $icon-src-width, $icon-src-height,
+    $icon-src-columns, $icon-src-x, $icon-src-y,
+    $icon-src-space-x, $icon-src-space-y,
+    $icon-classes);
+
+  @include hdpi() {
+    background-image: url($icon-src-hdpi);
+  }
+}
+
+.tile {
+  margin-right: 8px;
+  border-radius: 5px;
+
+  @include iconize(
+    $tile-dest-width, $tile-dest-height,
+    $tile-src, $tile-src-width, $tile-src-height,
+    $tile-src-columns, $classes: $tile-classes);
 }

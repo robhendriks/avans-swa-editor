@@ -21,7 +21,7 @@ Brush.prototype._addPoint = function (point) {
 }
 
 Brush.prototype.mouseDown = function (evt, editor) {
-  if (this._dragging) {
+  if (this._dragging || editor.getActiveMaterial() == null) {
     return
   }
   this._dragging = true
@@ -36,11 +36,13 @@ Brush.prototype.mouseUp = function (evt, editor) {
   if (!this._dragging) {
     return
   }
+
   this._dragging = false
   this._stroke = null
   this._points = []
   this._prev = null
 
+  clearTimeout(this._timer)
   editor.invalidate(true)
 }
 
@@ -49,6 +51,7 @@ Brush.prototype.mouseMove = function (evt, editor) {
     return
   }
 
+  let mat = editor.getActiveMaterial()
   let point = editor.transformInput(evt)
   this._addPoint(point)
 
@@ -65,9 +68,9 @@ Brush.prototype.mouseMove = function (evt, editor) {
         // Distinguish mouse button
         if (evt.which === 1) {
           if (!tile) {
-            world.addTile(x, y, 12)
+            world.addTile(x, y, mat.index)
           } else {
-            tile.type = 12
+            tile.type = mat.index
           }
         } else if (evt.which === 3 && tile) {
           world.deleteTile(tile.x, tile.y)

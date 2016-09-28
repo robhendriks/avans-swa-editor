@@ -16,8 +16,10 @@ Pencil.prototype.mouseDown = function (evt, editor) {
 }
 
 Pencil.prototype.mouseUp = function (evt, editor) {
-  let world
-  if ((world = editor.getWorld()) === null || this._point === null) {
+  let world, material
+  if (((world = editor.getWorld()) === null) ||
+      ((material = editor.getActiveMaterial())  === null) ||
+      this._point === null) {
     return
   }
 
@@ -33,9 +35,9 @@ Pencil.prototype.mouseUp = function (evt, editor) {
   // Distinguish mouse button
   if (evt.which === 1) {
     if (!tile) {
-      tile = world.addTile(x, y, 3)
+      tile = world.addTile(x, y, material.index)
     } else {
-      tile.type = 3
+      tile.type = material.index
     }
   } else if (evt.which === 3 && tile) {
     world.deleteTile(tile.x, tile.y)

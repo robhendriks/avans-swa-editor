@@ -1,13 +1,18 @@
-@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+@font-face {
+  font-family: 'bfont';
+  font-style: normal;
+  font-weight: 300;
+  src: local('bfont'), url(../fonts/bfont.ttf);
+}
 
 html {
   font-size: 62.5%;
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1.5rem;
-  line-height: 1.6rem;
+  font-family: 'bfont', sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.5rem;
   font-weight: normal;
 }
 
@@ -25,6 +30,6 @@ h5 { font-size: 1.8rem; line-height: 1.5; letter-spacing: -.05rem; }
 h6 { font-size: 1.5rem; line-height: 1.6; letter-spacing: 0; }
 
 h3.toolbar-title {
-  font-size: 1.5rem;
-  margin: 0 10px 0 0;
+  font-size: 1.4rem;
+  margin: 0 15px 0 0;
 }

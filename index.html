@@ -5,26 +5,39 @@
   <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
+  <!-- app -->
   <div id="app">
+
+    <!-- toolbar -->
     <aside id="toolbar">
       <div class="toolbar-scroll">
 
-        <h3 class="toolbar-title">File:</h3>
+        <!-- file -->
+        <h3 class="toolbar-title">World</h3>
         <div class="btns vertical fw">
           <a href="#" class="btn" title="Open World"><i class="icon folder to-left"></i> Open</a>
           <a href="#" class="btn" title="New World"><i class="icon new to-left"></i> New</a>
           <a href="#" class="btn" title="Save World"><i class="icon check to-left"></i> Save</a>
         </div>
+        <!-- /file -->
 
-        <h3 class="toolbar-title">Tool:</h3>
+        <!-- tool -->
+        <h3 class="toolbar-title">Tools</h3>
         <div class="btns justified fw">
           <a href="#" class="btn toggle" title="Hand" data-tool="hand"><i class="icon hand"></i></a>
           <a href="#" class="btn toggle" title="Pencil" data-tool="pencil"><i class="icon pencil"></i></a>
           <a href="#" class="btn toggle" title="Brush" data-tool="brush"><i class="icon brush"></i></a>
           <a href="#" class="btn toggle" title="Flood Fill" data-tool="fill"><i class="icon flood-fill"></i></a>
         </div>
+        <!-- /tool -->
 
-        <h3 class="toolbar-title">Layers:</h3>
+        <!-- materials -->
+        <h3 class="toolbar-title">Materials</h3>
+        <div id="materials" class="picker six vertical fw"></div>
+        <!-- /materials -->
+
+        <!-- layers -->
+        <h3 class="toolbar-title">Layers</h3>
         <div class="btns justified fw">
           <a class="btn toggle" title="Stats" data-layer="stats"><i class="icon font"></i></a>
           <a class="btn toggle" title="Grid" data-layer="grid"><i class="icon grid"></i></a>
@@ -32,20 +45,30 @@
           <a class="btn toggle" title="Tiles" data-layer="tiles"><i class="icon plane"></i></a>
           <a class="btn toggle" title="Objects"><i class="icon cube"></i></a>
         </div>
+        <!-- /layers -->
 
-        <h3 class="toolbar-title">Zoom:</h3>
+        <!-- zoom -->
+        <h3 class="toolbar-title">Zoom</h3>
         <div class="btns justified fw">
           <a href="#" class="btn" title="Reset Zoom" data-zoom="reset"><i class="icon reset-zoom"></i></a>
           <a href="#" class="btn" title="Zoom Out" data-zoom="out"><i class="icon zoom-out"></i></a>
           <a href="#" class="btn" title="Zoom In" data-zoom="in"><i class="icon zoom-in"></i></a>
         </div>
+        <!-- /zoom -->
 
       </div>
     </aside>
+    <!-- /toolbar -->
+
+    <!-- content -->
     <main id="content">
       <canvas id="editor"></canvas>
     </main>
+    <!-- /content -->
+
   </div>
+  <!-- /app -->
+
   <script>
     require('./assets/main')
   </script>

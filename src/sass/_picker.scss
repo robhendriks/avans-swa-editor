@@ -1,0 +1,62 @@
+.picker {
+  display: inline-block;
+  margin: 5px 0 10px 0;
+  border: $btn-border;
+  border-radius: $btn-border-radius;
+  overflow: hidden;
+
+  @include shade-selected($toggle-background-color);
+
+  @each $class, $size in $picker-variants {
+    $max-size: $size * $picker-row-height;
+
+    &.#{$class} {
+      overflow-y: scroll;
+      min-height: $max-size;
+      max-height: $max-size;
+
+      li:nth-child(-n+#{$size - 1}):last-child {
+        border-bottom-width: 1px;
+      }
+    }
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      height: $picker-row-height;
+      border-bottom: $btn-border-width lighten($btn-border-color, 5%) solid;
+
+      &:last-child {
+        border-bottom-width: 0;
+      }
+
+      &.active {
+        @include shade-selected($toggle-background-color-selected);
+
+        a {
+          color: $btn-text-color;
+        }
+      }
+
+      a {
+        display: block;
+        padding: 0 8px;
+        font-size: 1.2rem;
+        line-height: $picker-row-height;
+        color: $btn-text-color-selected;
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        > i.icon, i.tile {
+          top: 3px;
+        }
+      }
+    }
+  }
+}

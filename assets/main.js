@@ -17,6 +17,17 @@ editor.init({
   ],
   sprites: [
     new editile.Sprite('a', 'assets/images/tiles.png', 4, 4)
+  ],
+  materials: [
+    'dirt',
+    'grass',
+    'gravel',
+    'stone',
+    'stonebrick', 'stonebrick-1', 'stonebrick-2',
+    'sand',
+    'sandstone', 'sandstone-1', 'sandstone-2',
+    'brick',
+    'water'
   ]
 })
 

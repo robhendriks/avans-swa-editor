@@ -12,21 +12,49 @@ $btn-border-radius: 4px !default;
 $toggle-background-color: #464646;
 $toggle-background-color-selected: #5680C2;
 
-/* ICONS */
-$icon-size: 16px;
-$icon-image: url(../images/icons.png);
-$icon-image-hdpi: url(../images/icons@2x.png);
-$icon-image-width: 85px;
-$icon-image-height: 106px;
-$icon-offset: 3px;
-$icon-margin: 5px;
-$icons: (
+/* PICKER */
+$picker-row-height: 24px;
+$picker-variants: (
+  (one, 1), (two, 2), (three, 3),
+  (four, 4), (five, 5), (six, 6)
+);
+
+/* UI ICONS */
+$icon-src: '../images/icons.png';
+$icon-src-hdpi: '../images/icons@2x.png';
+$icon-src-width: 85px;
+$icon-src-height: 106px;
+$icon-src-columns: 4;
+$icon-src-x: 3px;
+$icon-src-y: 3px;
+$icon-src-space-x: 5px;
+$icon-src-space-y: 5px;
+
+$icon-dest-width: 16px;
+$icon-dest-height: 16px;
+
+$icon-classes: (
   folder, file, new, check,
   plane, cube, circle, monkey,
   cursor, hand, eraser, pencil,
   brush, reset-zoom, zoom-in, zoom-out,
   axes, grid, font, flood-fill
 );
+
+/* TILE ICONS */
+$tile-src: '../images/tiles.png';
+$tile-src-width: 64px;
+$tile-src-height: 64px;
+$tile-src-columns: 4;
+
+$tile-dest-width: 16px;
+$tile-dest-height: 16px;
+
+$tile-classes: (
+  dirt, grass, gravel, stone,
+  stonebrick, stonebrick-1, stonebrick-2,
+  sand, sandstone, sandstone-1, sandstone-2,
+  brick, water);
 
 /* GENERAL */
 $background-color: #393939;

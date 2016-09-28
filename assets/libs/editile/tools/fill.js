@@ -43,8 +43,10 @@ Fill.prototype.mouseDown = function (evt, editor) {
 }
 
 Fill.prototype.mouseUp = function (evt, editor) {
-  let world
-  if (!(world = editor.getWorld()) || !this._point) {
+  let world, material
+  if (((world = editor.getWorld()) === null) ||
+      ((material = editor.getActiveMaterial())  === null) ||
+      this._point === null) {
     return
   }
 
@@ -57,7 +59,7 @@ Fill.prototype.mouseUp = function (evt, editor) {
 
   let tile = world.getTileAt(x, y)
   let src = (!tile ? null : tile.type)
-  let dest = (this._button === 3 ? null : 1) // CHANGE TO DYNAMIC MATERIAL FROM EDITOR ROB!!!!!
+  let dest = (this._button === 3 ? null : material.index) // CHANGE TO DYNAMIC MATERIAL FROM EDITOR ROB!!!!!
 
   this._floodFill(world, x, y, src, dest)
 
