@@ -2,9 +2,18 @@ const util = require('util')
 const async = require('async')
 const tileCase = require('title-case')
 
-const EventEmitter = require('events').EventEmitter
 const Vector = require('./math/vector').Vector
 const Tile = require('./game/tile').Tile
+
+const Sprite = require('./game/sprite').Sprite
+const SpriteRegistry = require('./game/sprite').Registry
+
+const GameObject = require('./game/game-object').GameObject
+const GameObjectFactory = require('./game/game-object').Factory
+
+const EventEmitter = require('events').EventEmitter
+
+const MODES = ['tile', 'object']
 
 function Editor () {
   EventEmitter.call(this)
@@ -24,6 +33,10 @@ function Editor () {
   this._tool = null
   this._materials = null
   this._material = null
+  this._materialsElem = null
+  this._mode = null
+  this._gameObjects = null
+  this._gameObject = null
 }
 
 Editor.prototype.translateInput = function (evt) {
@@ -50,13 +63,37 @@ Editor.prototype.snapInput = function (evt) {
 
 Editor.prototype.init = function (options) {
   let self = this
+
+  let sprites = this._injectSprites(options)
+
   async.parallel([
     this._loadTools.bind(this, options['tools'] || []),
     this._loadLayers.bind(this, options['layers'] || []),
-    this._loadSprites.bind(this, options['sprites'] || [])
+    this._loadSprites.bind(this, sprites)
   ], function () {
     self._initEditor(options)
   })
+}
+
+Editor.prototype._injectSprites = function (options) {
+  let sprites = options['sprites'] || []
+  let objs = options['objects'] || []
+
+  console.info('injecting %s sprite(s)...', objs.length)
+
+  for (let obj of objs) {
+    if (!obj.id || !obj.size || !obj.spriteId) {
+      console.warn('invalid object:', obj.id)
+      continue
+    }
+
+    GameObjectFactory.addObject(obj)
+
+    let rows = obj.variants || 1
+
+    sprites.push(new Sprite(obj.spriteId, `assets/images/objects/${obj.id}.png`, rows, 1))
+  }
+  return sprites
 }
 
 Editor.prototype._loadTools = function (tools, callback) {
@@ -91,12 +128,14 @@ Editor.prototype._loadSprites = function (sprites, callback) {
   let loaded = 0
 
   for (let i = 0; i < length; i++) {
-    let sprite = sprites[0]
+    let sprite = sprites[i]
     if (typeof sprite !== 'object') {
       continue
     }
 
     sprite.load(function () {
+      SpriteRegistry.register(sprite)
+
       if (++loaded >= length) {
         callback()
       }
@@ -132,7 +171,9 @@ Editor.prototype._initEditor = function (options) {
 }
 
 Editor.prototype._initUI = function (options) {
+  this._initModeUI()
   this._initToolUI()
+  this._initGameObjectUI(options)
   this._initMaterialUI(options)
   this._initZoomUI()
   this._initLayerUI()
@@ -161,10 +202,27 @@ Editor.prototype._initToolUI = function () {
   }
 }
 
+Editor.prototype._initModeUI = function () {
+  let self = this
+
+  let nodes = document.querySelectorAll('[data-mode]')
+  for (let node of nodes) {
+    node.addEventListener('click', function (evt) {
+      evt.preventDefault()
+      let mode = this.getAttribute('data-mode')
+      self.setMode(mode)
+    })
+  }
+
+  if (nodes.length > 0) {
+    nodes[0].click()
+  }
+}
+
 Editor.prototype._initMaterialUI = function (options) {
   let materials = this._materials = options['materials'] || []
 
-  let elem = document.getElementById('materials')
+  let elem = this._materialsElem = document.getElementById('materials')
   let list = document.createElement('ul')
 
   for (let material of materials) {
@@ -199,6 +257,43 @@ Editor.prototype._initMaterialUI = function (options) {
 
   if (materials.length > 0) {
     this.setMaterial(materials[0])
+  }
+}
+
+Editor.prototype._initGameObjectUI = function (options) {
+  let gameObjects = this._gameObjects = options['objects'] || []
+
+  let elem = document.getElementById('gameObjects')
+  let list = document.createElement('ul')
+
+  for (let gameObject of gameObjects) {
+    let listItem = document.createElement('li')
+    listItem.setAttribute('data-game-object-id', gameObject.id)
+
+    let anchor = document.createElement('a')
+    anchor.setAttribute('href', '#')
+
+    anchor.innerHTML = '<i class="icon cube" style="top: 4px;"></i> ' + gameObject.name
+
+    let self = this
+
+    anchor.addEventListener('click', function (evt) {
+      evt.preventDefault()
+
+      let parent = this.parentNode
+      let gameObjectId = parent.getAttribute('data-game-object-id')
+
+      self.setGameObject(gameObjectId)
+    })
+
+    listItem.appendChild(anchor)
+    list.appendChild(listItem)
+  }
+
+  elem.appendChild(list)
+
+  if (gameObjects.length > 0) {
+    this.setGameObject(gameObjects[0].id)
   }
 }
 
@@ -264,19 +359,22 @@ Editor.prototype._resizeEditor = function (evt) {
 }
 
 Editor.prototype._mouseDown = function (evt) {
-  if (this._tool !== null) {
+  if (this._tool !== null &&
+      this._tool.isModeSupported(this._mode)) {
     this._tool.mouseDown(evt, this)
   }
 }
 
 Editor.prototype._mouseUp = function (evt) {
-  if (this._tool !== null) {
+  if (this._tool !== null &&
+      this._tool.isModeSupported(this._mode)) {
     this._tool.mouseUp(evt, this)
   }
 }
 
 Editor.prototype._mouseMove = function (evt) {
-  if (this._tool !== null) {
+  if (this._tool !== null &&
+      this._tool.isModeSupported(this._mode)) {
     this._tool.mouseMove(evt, this)
   }
 }
@@ -319,8 +417,15 @@ Editor.prototype.render = function () {
 
     for (let i = 0; i < this._layers.length; i++) {
       let layer = this._layers[i]
-      if (layer.isVisible()) {
+      if (layer.isVisible() || layer.ghost) {
         ctx.resetTransform()
+
+        ctx.globalAlpha = 1.0
+
+        // Ghost layer if requested
+        if (!layer.isVisible() && layer.ghost) {
+          ctx.globalAlpha = 0.2
+        }
 
         // Scale layer if requested
         if (layer.isScalable()) {
@@ -488,22 +593,27 @@ Editor.prototype.getMaterial = function (id) {
   return null
 }
 
+Editor.prototype.getMaterialByIndex = function(index) {
+  return this._materials[index] || null
+}
+
 Editor.prototype.getActiveMaterial = function () {
   return this._material
 }
 
-Editor.prototype.setMaterial = function (id) {
+Editor.prototype.setMaterial = function (id, scrollTo) {
   let mat = this.getMaterial(id)
   if (mat === null) {
     console.warn('invalid material id:', id)
     return
   }
 
-  let nodes = document.querySelectorAll('li[data-material]')
+  let nodes = document.querySelectorAll('li[data-material]'), theNode
   if (nodes) {
     for (let node of nodes) {
       let attr = node.getAttribute('data-material')
       if (attr === id) {
+        theNode = node
         node.classList.add('active')
       } else {
         node.classList.remove('active')
@@ -511,7 +621,69 @@ Editor.prototype.setMaterial = function (id) {
     }
   }
 
+  if (scrollTo === true && theNode) {
+    this._materialsElem.scrollTop = theNode.offsetTop
+  }
   this._material = mat
+  this.setMode('tile')
+}
+
+Editor.prototype.getMode = function () {
+  return this._mode
+}
+
+Editor.prototype.setMode = function (mode) {
+  if (MODES.indexOf(mode) === -1) {
+    console.warn('invalid mode:', mode)
+    return
+  }
+
+  let nodes = document.querySelectorAll('[data-mode]')
+  for (let node of nodes) {
+    let nodeMode = node.getAttribute('data-mode')
+    if (nodeMode === mode) {
+      node.classList.add('active')
+    } else {
+      node.classList.remove('active')
+    }
+  }
+
+  this._mode = mode
+  this.invalidate(true)
+}
+
+Editor.prototype.getGameObject = function (gameObjectId) {
+  for (let gameObject of this._gameObjects) {
+    if (gameObject.id === gameObjectId) {
+      return gameObject
+    }
+  }
+  return null
+}
+
+Editor.prototype.getActiveGameObject = function () {
+  return this._gameObject
+}
+
+Editor.prototype.setGameObject = function (gameObjectId) {
+  let gameObject
+  if ((gameObject = this.getGameObject(gameObjectId)) == null) {
+    console.warn('invalid game object ID:', gameObjectId)
+    return
+  }
+
+  let nodes = document.querySelectorAll('[data-game-object-id]')
+  for (let node of nodes) {
+    let nodeGameObjectId = node.getAttribute('data-game-object-id')
+    if (nodeGameObjectId === gameObjectId) {
+      node.classList.add('active')
+    } else {
+      node.classList.remove('active')
+    }
+  }
+
+  this._gameObject = gameObject.id
+  this.setMode('object')
 }
 
 util.inherits(Editor, EventEmitter)

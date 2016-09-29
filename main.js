@@ -8,8 +8,10 @@ let mainWindow
 
 function createWindow () {
   let windowOptions = {
-    width: 800,
-    height: 600,
+    width: 1024,
+    minWidth: 1024,
+    height: 768,
+    minHeight: 768,
     title: app.getName()
   }
 

@@ -104,7 +104,7 @@ h3.toolbar-title {
     background-position: -3px -45px; }
   .icon.hand {
     background-position: -24px -45px; }
-  .icon.eraser {
+  .icon.picker {
     background-position: -45px -45px; }
   .icon.pencil {
     background-position: -66px -45px; }
@@ -231,63 +231,65 @@ h3.toolbar-title {
       border-top-left-radius: 0;
       border-top-right-radius: 0; }
 
-.picker {
+div.picker {
   display: inline-block;
   margin: 5px 0 10px 0;
   border: 1px #191919 solid;
   border-radius: 4px;
   overflow: hidden;
   background: linear-gradient(#393939, #535353); }
-  .picker.one {
+  div.picker.one {
     overflow-y: scroll;
     min-height: 24px;
     max-height: 24px; }
-    .picker.one li:nth-child(-n+0):last-child {
+    div.picker.one li:nth-child(-n+0):last-child {
       border-bottom-width: 1px; }
-  .picker.two {
+  div.picker.two {
     overflow-y: scroll;
     min-height: 48px;
     max-height: 48px; }
-    .picker.two li:nth-child(-n+1):last-child {
+    div.picker.two li:nth-child(-n+1):last-child {
       border-bottom-width: 1px; }
-  .picker.three {
+  div.picker.three {
     overflow-y: scroll;
     min-height: 72px;
     max-height: 72px; }
-    .picker.three li:nth-child(-n+2):last-child {
+    div.picker.three li:nth-child(-n+2):last-child {
       border-bottom-width: 1px; }
-  .picker.four {
+  div.picker.four {
     overflow-y: scroll;
     min-height: 96px;
     max-height: 96px; }
-    .picker.four li:nth-child(-n+3):last-child {
+    div.picker.four li:nth-child(-n+3):last-child {
       border-bottom-width: 1px; }
-  .picker.five {
+  div.picker.five {
     overflow-y: scroll;
     min-height: 120px;
     max-height: 120px; }
-    .picker.five li:nth-child(-n+4):last-child {
+    div.picker.five li:nth-child(-n+4):last-child {
       border-bottom-width: 1px; }
-  .picker.six {
+  div.picker.six {
     overflow-y: scroll;
     min-height: 144px;
     max-height: 144px; }
-    .picker.six li:nth-child(-n+5):last-child {
+    div.picker.six li:nth-child(-n+5):last-child {
       border-bottom-width: 1px; }
-  .picker ul {
+  div.picker ul {
+    position: relative;
     margin: 0;
     padding: 0;
     list-style: none; }
-    .picker ul li {
+    div.picker ul li {
+      position: relative;
       height: 24px;
       border-bottom: 1px #262626 solid; }
-      .picker ul li:last-child {
+      div.picker ul li:last-child {
         border-bottom-width: 0; }
-      .picker ul li.active {
+      div.picker ul li.active {
         background: linear-gradient(#4372bb, #698ec9); }
-        .picker ul li.active a {
+        div.picker ul li.active a {
           color: #000; }
-      .picker ul li a {
+      div.picker ul li a {
         display: block;
         padding: 0 8px;
         font-size: 1.2rem;
@@ -297,7 +299,7 @@ h3.toolbar-title {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; }
-        .picker ul li a > i.icon, .picker ul li a i.tile {
+        div.picker ul li a > i.icon, div.picker ul li a i.tile {
           top: 3px; }
 
 * {
@@ -326,14 +328,14 @@ body {
   top: 0;
   bottom: 0;
   height: 100%;
-  width: 200px;
+  width: 250px;
   padding: 10px;
   background-color: #727272; }
 
 #content {
   position: absolute;
   overflow: hidden;
-  left: 200px;
+  left: 250px;
   top: 0;
   right: 0;
   height: 100%; }

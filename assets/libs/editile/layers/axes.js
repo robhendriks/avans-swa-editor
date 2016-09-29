@@ -9,7 +9,7 @@ function Axes () {
 
 Axes.prototype.id = 'axes'
 Axes.prototype.label = 'Axes'
-Axes.prototype.zIndex = 3
+Axes.prototype.zIndex = 4
 
 Axes.prototype.init = function (editor) {
   let canvas = document.createElement('canvas')

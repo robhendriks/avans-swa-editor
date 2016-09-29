@@ -14,6 +14,7 @@ function Hand () {
 Hand.prototype.id = 'hand'
 Hand.prototype.label = 'Hand'
 Hand.prototype.cursor = ['hand.png', 5, 0]
+Hand.prototype.supportedModes = ['object']
 
 Hand.prototype.mouseDown = function (evt, editor) {
   if (this._dragging) {

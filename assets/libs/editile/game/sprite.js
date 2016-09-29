@@ -1,19 +1,3 @@
-const Registry = new (function () {
-  const map = {}
-
-  this.add = function (id, sprite) {
-    map[id] = sprite
-  }
-
-  this.get = function (id) {
-    return (id in map ? map[id] : false)
-  }
-
-  this.getAll = function () {
-    return map
-  }
-})
-
 function Sprite (id, src, rows, columns) {
   this._id = id
   this._src = src
@@ -24,8 +8,6 @@ function Sprite (id, src, rows, columns) {
   this._columnWidth = 0
   this._height = 0
   this._rowHeight = 0
-
-  Registry.add(id, this)
 }
 
 Sprite.prototype.load = function (callback) {
@@ -76,4 +58,18 @@ Sprite.prototype.getHeight = function () {
 }
 
 exports.Sprite = Sprite
-exports.Registry = Registry
+
+/* FACTORY*/
+function Registry () {
+  this._map = {}
+}
+
+Registry.prototype.register = function (sprite) {
+  this._map[sprite.getId()] = sprite
+}
+
+Registry.prototype.get = function (id) {
+  return (this._map[id] || null)
+}
+
+exports.Registry = new Registry()

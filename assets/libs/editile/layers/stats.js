@@ -36,6 +36,21 @@ Stats.prototype.render = function (ctx, rect, editor) {
   str += editor.getScalePercent()
   str += '%)'
 
+  let mode
+  if ((mode = editor.getMode()) !== null) {
+    if (mode === 'tile') {
+      /* Active material */
+      let material
+      if ((material = editor.getActiveMaterial()) !== null) {
+        str += ' ('
+        str += material.id
+        str += '['
+        str += material.index
+        str += '])'
+      }
+    }
+  }
+
   ctx.fillText(str, 8, 22)
 }
 

@@ -4,6 +4,7 @@ function Tool () {
 Tool.prototype.id = undefined
 Tool.prototype.label = undefined
 Tool.prototype.cursor = ['default.png', 4, 1]
+Tool.prototype.supportedModes = []
 
 /* NON-REQUIRED */
 Tool.prototype.activate = function (editor) {
@@ -27,6 +28,10 @@ Tool.prototype.mouseMove = function (evt, editor) {
 
 /* NON-REQUIRED */
 Tool.prototype.render = function (evt, editor) {
+}
+
+Tool.prototype.isModeSupported = function (mode) {
+  return (this.supportedModes.indexOf(mode) !== -1)
 }
 
 exports.Tool = Tool

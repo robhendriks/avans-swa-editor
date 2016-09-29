@@ -9,6 +9,7 @@ editile.Box = require('./editile/math/box').Box
 
 editile.World = require('./editile/game/world').World
 editile.Tile = require('./editile/game/tile').Tile
+editile.Tile = require('./editile/game/game-object').GameObject
 editile.Sprite = require('./editile/game/sprite').Sprite
 
 editile.tools = require('./editile/tools')

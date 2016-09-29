@@ -9,12 +9,14 @@ editor.init({
     new editile.tools.Hand(),
     new editile.tools.Brush(),
     new editile.tools.Pencil(),
-    new editile.tools.Fill()
+    new editile.tools.Fill(),
+    new editile.tools.Picker()
   ],
   layers: [
     new editile.layers.Grid(),
     new editile.layers.Axes(),
     new editile.layers.Tiles(),
+    new editile.layers.GameObjects(),
     new editile.layers.Stats()
   ],
   sprites: [
@@ -30,6 +32,50 @@ editor.init({
     'sandstone', 'sandstone-1', 'sandstone-2',
     'brick',
     'water'
+  ],
+  objects: [
+    {
+      id: 'road-cap',
+      name: 'Road Cap',
+      size: {x: 1, y: 1},
+      variants: 4,
+      spriteId: 'roadcp'
+    },
+    {
+      id: 'road-straight',
+      name: 'Road Straight',
+      size: {x: 1, y: 1},
+      variants: 2,
+      spriteId: 'road'
+    },
+    {
+      id: 'road-junction',
+      name: 'Road Junction',
+      size: {x: 1, y: 1},
+      variants: 1,
+      spriteId: 'roadj'
+    },
+    {
+      id: 'road-t-junction',
+      name: 'Road T-Junction',
+      size: {x: 1, y: 1},
+      variants: 4,
+      spriteId: "roadtj"
+    },
+    {
+      id: 'road-corner',
+      name: 'Road Corner',
+      size: {x: 1, y: 1},
+      variants: 4,
+      spriteId: 'roadc'
+    },
+    {
+      id: 'building-a',
+      name: 'Building Type A',
+      size: {x: 2, y: 2},
+      variants: 1,
+      spriteId: 'blda'
+    }
   ]
 })
 

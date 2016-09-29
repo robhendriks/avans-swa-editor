@@ -1,4 +1,4 @@
-.picker {
+div.picker {
   display: inline-block;
   margin: 5px 0 10px 0;
   border: $btn-border;
@@ -22,11 +22,13 @@
   }
 
   ul {
+    position: relative;
     margin: 0;
     padding: 0;
     list-style: none;
 
     li {
+      position: relative;
       height: $picker-row-height;
       border-bottom: $btn-border-width lighten($btn-border-color, 5%) solid;
 

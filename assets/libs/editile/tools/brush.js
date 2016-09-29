@@ -12,6 +12,7 @@ function Brush () {
 Brush.prototype.id = 'brush'
 Brush.prototype.label = 'Brush'
 Brush.prototype.cursor = ['brush.png', 1, 15]
+Brush.prototype.supportedModes = ['tile', 'object']
 
 Brush.prototype._addPoint = function (point) {
   if (this._points.length >= 20) {
@@ -62,17 +63,19 @@ Brush.prototype.mouseMove = function (evt, editor) {
 
     if (!world.outOfBounds(x, y)) {
       if (this._prev === null || !this._prev.equals(point)) {
-        let tile = world.getTileAt(x, y)
 
-        // Distinguish mouse button
-        if (evt.which === 1) {
-          if (!tile) {
-            world.addTile(x, y, mat.index)
-          } else {
-            tile.type = mat.index
+        if (editor.getMode() === 'tile') {
+          let tile = world.getTileAt(x, y)
+          if (evt.which === 1) {
+            if (!tile) {
+              world.addTile(x, y, mat.index)
+            } else {
+              tile.type = mat.index
+            }
+          } else if (evt.which === 3 && tile) {
+            world.deleteTile(tile.x, tile.y)
           }
-        } else if (evt.which === 3 && tile) {
-          world.deleteTile(tile.x, tile.y)
+        } else if (editor.getMode() === 'object') {
         }
 
         this._prev = point

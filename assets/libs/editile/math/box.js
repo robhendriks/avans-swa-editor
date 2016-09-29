@@ -54,4 +54,28 @@ Box.prototype.expandByPoint = function (point) {
   return this
 }
 
+Box.prototype.containsPoint = function (point) {
+  if (point.x < this.min.x || point.x > this.max.x ||
+      point.y < this.min.y || point.y > this.max.y) {
+    return false
+  }
+  return true
+}
+
+Box.prototype.containsBox = function (box) {
+  if ((this.min.x <= box.min.x) && (box.max.x <= this.max.x) &&
+      (this.min.y <= box.min.y) && (box.max.y <= this.max.y)) {
+    return true
+  }
+  return false
+}
+
+Box.prototype.intersectsBox = function (box) {
+  if (box.max.x < this.min.x || box.min.x > this.max.x ||
+      box.max.y < this.min.y || box.min.y > this.max.y) {
+    return false
+  }
+  return true
+}
+
 exports.Box = Box

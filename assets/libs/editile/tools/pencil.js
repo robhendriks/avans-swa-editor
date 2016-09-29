@@ -1,6 +1,7 @@
 const util = require('util')
 const Tool = require('./tool').Tool
 const Tile = require('../game/tile').Tile
+const Factory = require('../game/game-object').Factory
 
 function Pencil () {
   Tool.call(this)
@@ -10,6 +11,7 @@ function Pencil () {
 Pencil.prototype.id = 'pencil'
 Pencil.prototype.label = 'Pencil'
 Pencil.prototype.cursor = ['pencil.png', 0, 16]
+Pencil.prototype.supportedModes = ['tile', 'object']
 
 Pencil.prototype.mouseDown = function (evt, editor) {
   this._point = editor.snapInput(editor.transformInput(evt))
@@ -32,15 +34,25 @@ Pencil.prototype.mouseUp = function (evt, editor) {
 
   let tile = world.getTileAt(x, y)
 
-  // Distinguish mouse button
-  if (evt.which === 1) {
-    if (!tile) {
-      tile = world.addTile(x, y, material.index)
-    } else {
-      tile.type = material.index
+  if (editor.getMode() === 'tile') {
+    // Distinguish mouse button
+    if (evt.which === 1) {
+      if (!tile) {
+        tile = world.addTile(x, y, material.index)
+      } else {
+        tile.type = material.index
+      }
+    } else if (evt.which === 3 && tile) {
+      world.deleteTile(tile.x, tile.y)
     }
-  } else if (evt.which === 3 && tile) {
-    world.deleteTile(tile.x, tile.y)
+  } else if (editor.getMode() === 'object') {
+    let objId = editor.getActiveGameObject()
+    let obj = Factory.createObject(objId, x, y)
+
+    let layer = world.getObjectLayer()
+    if (!layer.setItem(obj)) {
+      console.warn('occupied')
+    }
   }
 
   editor.invalidate(true)

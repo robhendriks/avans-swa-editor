@@ -9,6 +9,7 @@ function Fill () {
 Fill.prototype.id = 'fill'
 Fill.prototype.label = 'Fill'
 Fill.prototype.cursor = ['fill.png', 8, 8]
+Fill.prototype.supportedModes = ['tile']
 
 Fill.prototype._floodFill = function (world, x, y, src, dest) {
   if (src === dest) return

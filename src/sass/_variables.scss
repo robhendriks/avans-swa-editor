@@ -36,7 +36,7 @@ $icon-dest-height: 16px;
 $icon-classes: (
   folder, file, new, check,
   plane, cube, circle, monkey,
-  cursor, hand, eraser, pencil,
+  cursor, hand, picker, pencil,
   brush, reset-zoom, zoom-in, zoom-out,
   axes, grid, font, flood-fill
 );
@@ -60,5 +60,5 @@ $tile-classes: (
 $background-color: #393939;
 
 /* TOOLBAR */
-$toolbar-width: 200px;
+$toolbar-width: 250px;
 $toolbar-background-color: #727272;

@@ -2,11 +2,17 @@ const util = require('util')
 const math = require('../utils/math')
 const EventEmitter = require('events').EventEmitter
 const Tile = require('./tile').Tile
+const WorldLayer = require('./world-layer').WorldLayer
 
 function World (width, height) {
   EventEmitter.call(this)
+
   this.setWidth(width || World.MIN_SIZE)
   this.setHeight(height || World.MIN_SIZE)
+
+  this._objectLayer = new WorldLayer(this)
+  this._tileLayer = new WorldLayer(this)
+
   this._tiles = []
 }
 
@@ -103,6 +109,14 @@ World.prototype.getTiles = function () {
 
 World.prototype.setTiles = function (newValue) {
   this._tiles = newValue || []
+}
+
+World.prototype.getTileLayer = function () {
+  return this._tileLayer
+}
+
+World.prototype.getObjectLayer = function () {
+  return this._objectLayer
 }
 
 World.prototype.toString = function () {
