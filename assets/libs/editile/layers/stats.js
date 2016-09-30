@@ -48,6 +48,13 @@ Stats.prototype.render = function (ctx, rect, editor) {
         str += material.index
         str += '])'
       }
+    } else if (mode === 'object') {
+      let obj
+      if ((obj = editor.getActiveGameObject())) {
+        str += ' ('
+        str += obj
+        str += ')'
+      }
     }
   }
 

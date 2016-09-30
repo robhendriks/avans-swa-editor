@@ -3,6 +3,7 @@ const app = electron.app
 const ipc = electron.ipcMain
 const dialog = electron.dialog
 const BrowserWindow = electron.BrowserWindow
+const Menu = electron.Menu
 
 let mainWindow
 
@@ -37,7 +38,6 @@ app.on('activate', function () {
     createWindow()
   }
 })
-
 
 ipc.on('open-file-dialog', function (event) {
   dialog.showOpenDialog(mainWindow, {

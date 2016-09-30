@@ -7,6 +7,7 @@ editor.init({
   selector: '#editor',
   tools: [
     new editile.tools.Hand(),
+    new editile.tools.Rotate(),
     new editile.tools.Brush(),
     new editile.tools.Pencil(),
     new editile.tools.Fill(),
@@ -23,58 +24,55 @@ editor.init({
     new editile.Sprite('a', 'assets/images/tiles.png', 4, 4)
   ],
   materials: [
-    'dirt',
-    'grass',
-    'gravel',
-    'stone',
-    'stonebrick', 'stonebrick-1', 'stonebrick-2',
-    'sand',
-    'sandstone', 'sandstone-1', 'sandstone-2',
-    'brick',
-    'water'
+    'earth-a', 'earth-b',
+    'ground-a', 'ground-b',
+    'grass-a', 'grass-b', 'grass-c', 'grass-d',
+    'sand-a', 'sand-b', 'sand-c',
+    'rock-a', 'rock-b', 'rock-c',
+    'concrete-a', 'concrete-b'
   ],
   objects: [
     {
       id: 'road-cap',
       name: 'Road Cap',
       size: {x: 1, y: 1},
-      variants: 4,
       spriteId: 'roadcp'
     },
     {
       id: 'road-straight',
       name: 'Road Straight',
       size: {x: 1, y: 1},
-      variants: 2,
       spriteId: 'road'
     },
     {
       id: 'road-junction',
       name: 'Road Junction',
       size: {x: 1, y: 1},
-      variants: 1,
       spriteId: 'roadj'
     },
     {
       id: 'road-t-junction',
       name: 'Road T-Junction',
       size: {x: 1, y: 1},
-      variants: 4,
       spriteId: "roadtj"
     },
     {
       id: 'road-corner',
       name: 'Road Corner',
       size: {x: 1, y: 1},
-      variants: 4,
       spriteId: 'roadc'
     },
     {
       id: 'building-a',
       name: 'Building Type A',
       size: {x: 2, y: 2},
-      variants: 1,
       spriteId: 'blda'
+    },
+    {
+      id: 'building-b',
+      name: 'Building Type B',
+      size: {x: 2, y: 2},
+      spriteId: 'bldb'
     }
   ]
 })

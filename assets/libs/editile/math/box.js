@@ -5,6 +5,10 @@ function Box (min, max) {
   this.max = (max || new Vector(- Infinity, - Infinity))
 }
 
+Box.prototype.equals = function (box) {
+  return (this.min.equals(box.min) && this.max.equals(box.max))
+}
+
 Box.prototype.set = function (min, max) {
   this.min.copy(min)
   this.max.copy(max)

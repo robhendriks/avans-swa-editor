@@ -1,7 +1,10 @@
 const util = require('util')
 const Tool = require('./tool').Tool
 const Tile = require('../game/tile').Tile
+const Vector = require('../math/vector').Vector
 const Factory = require('../game/game-object').Factory
+
+const SIZE = new Vector(Tile.WIDTH, Tile.HEIGHT)
 
 function Pencil () {
   Tool.call(this)
@@ -18,6 +21,7 @@ Pencil.prototype.mouseDown = function (evt, editor) {
 }
 
 Pencil.prototype.mouseUp = function (evt, editor) {
+
   let world, material
   if (((world = editor.getWorld()) === null) ||
       ((material = editor.getActiveMaterial())  === null) ||
@@ -32,9 +36,9 @@ Pencil.prototype.mouseUp = function (evt, editor) {
     return
   }
 
-  let tile = world.getTileAt(x, y)
-
   if (editor.getMode() === 'tile') {
+    let tile = world.getTileAt(x, y)
+
     // Distinguish mouse button
     if (evt.which === 1) {
       if (!tile) {
@@ -46,15 +50,24 @@ Pencil.prototype.mouseUp = function (evt, editor) {
       world.deleteTile(tile.x, tile.y)
     }
   } else if (editor.getMode() === 'object') {
-    let objId = editor.getActiveGameObject()
-    let obj = Factory.createObject(objId, x, y)
-
     let layer = world.getObjectLayer()
-    if (!layer.setItem(obj)) {
-      console.warn('occupied')
+
+     // Distinguish mouse button
+    if (evt.which === 1) {
+      let objId = editor.getActiveGameObject()
+      let obj = Factory.createObject(objId, x, y)
+
+      if (!layer.setItem(obj)) {
+        console.warn('occupied')
+      }
+    } else if (evt.which === 3) {
+      if (!layer.unsetItemAt(x, y)) {
+        console.warn('not occupied')
+      }
     }
   }
 
+  this._point = null
   editor.invalidate(true)
 }
 

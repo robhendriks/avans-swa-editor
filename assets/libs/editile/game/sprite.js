@@ -1,8 +1,8 @@
 function Sprite (id, src, rows, columns) {
   this._id = id
   this._src = src
-  this._rows = rows
-  this._columns = columns
+  this._rows = rows || -1
+  this._columns = columns || -1
   this._image = null
   this._width = 0
   this._columnWidth = 0
@@ -18,8 +18,18 @@ Sprite.prototype.load = function (callback) {
   this._image.onload = function () {
     let w = self._width = this.width
     let h = self._height = this.height
+
+    if (self._rows < 0 && self._columns < 0) {
+      if (self._height % self._width !== 0) {
+        throw new Error('invalid sprite dimensions:', self._id)
+      }
+      self._columns = 1
+      self._rows = self._height / self._width
+    }
+
     self._columnWidth = w / self._columns
     self._rowHeight = h / self._rows
+
     callback()
   }
 }

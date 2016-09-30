@@ -89,9 +89,7 @@ Editor.prototype._injectSprites = function (options) {
 
     GameObjectFactory.addObject(obj)
 
-    let rows = obj.variants || 1
-
-    sprites.push(new Sprite(obj.spriteId, `assets/images/objects/${obj.id}.png`, rows, 1))
+    sprites.push(new Sprite(obj.spriteId, `assets/images/objects/${obj.id}.png`))
   }
   return sprites
 }
@@ -273,7 +271,14 @@ Editor.prototype._initGameObjectUI = function (options) {
     let anchor = document.createElement('a')
     anchor.setAttribute('href', '#')
 
-    anchor.innerHTML = '<i class="icon cube" style="top: 4px;"></i> ' + gameObject.name
+    let sprite = SpriteRegistry.get(gameObject.spriteId)
+
+    let imgSrc = sprite.getSrc()
+    let ratio = 16 / sprite.getWidth()
+    let imgWidth = 16
+    let imgHeight = sprite.getHeight() * ratio
+
+    anchor.innerHTML = `<i class="icon" style="background-image: url(${imgSrc}); background-size: ${imgWidth}px ${imgHeight}px;"></i> ` + gameObject.name
 
     let self = this
 

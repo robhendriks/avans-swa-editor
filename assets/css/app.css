@@ -83,7 +83,7 @@ h3.toolbar-title {
   width: 16px;
   background-image: url("../images/icons.png");
   background-repeat: no-repeat;
-  background-size: 85px 106px; }
+  background-size: 85px 127px; }
   .icon.folder {
     background-position: -3px -3px; }
   .icon.file {
@@ -124,6 +124,8 @@ h3.toolbar-title {
     background-position: -45px -87px; }
   .icon.flood-fill {
     background-position: -66px -87px; }
+  .icon.rotate {
+    background-position: -3px -108px; }
   @media (min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
     .icon {
       background-image: url("../images/icons@2x.png"); } }
@@ -138,32 +140,38 @@ h3.toolbar-title {
   background-image: url("../images/tiles.png");
   background-repeat: no-repeat;
   background-size: 64px 64px; }
-  .tile.dirt {
+  .tile.earth-a {
     background-position: 0px -0px; }
-  .tile.grass {
+  .tile.earth-b {
     background-position: -16px -0px; }
-  .tile.gravel {
+  .tile.ground-a {
     background-position: -32px -0px; }
-  .tile.stone {
+  .tile.ground-b {
     background-position: -48px -0px; }
-  .tile.stonebrick {
+  .tile.grass-a {
     background-position: 0px -16px; }
-  .tile.stonebrick-1 {
+  .tile.grass-b {
     background-position: -16px -16px; }
-  .tile.stonebrick-2 {
+  .tile.grass-c {
     background-position: -32px -16px; }
-  .tile.sand {
+  .tile.grass-d {
     background-position: -48px -16px; }
-  .tile.sandstone {
+  .tile.sand-a {
     background-position: 0px -32px; }
-  .tile.sandstone-1 {
+  .tile.sand-b {
     background-position: -16px -32px; }
-  .tile.sandstone-2 {
+  .tile.sand-c {
     background-position: -32px -32px; }
-  .tile.brick {
+  .tile.rock-a {
     background-position: -48px -32px; }
-  .tile.water {
+  .tile.rock-b {
     background-position: 0px -48px; }
+  .tile.rock-c {
+    background-position: -16px -48px; }
+  .tile.concrete-a {
+    background-position: -32px -48px; }
+  .tile.concrete-b {
+    background-position: -48px -48px; }
 
 .btn {
   display: inline-block;

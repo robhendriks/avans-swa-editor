@@ -1,5 +1,6 @@
 const util = require('util')
 const Tool = require('./tool').Tool
+const Factory = require('../game/game-object').Factory
 
 function Brush () {
   Tool.call(this)
@@ -76,6 +77,21 @@ Brush.prototype.mouseMove = function (evt, editor) {
             world.deleteTile(tile.x, tile.y)
           }
         } else if (editor.getMode() === 'object') {
+          let layer = world.getObjectLayer()
+
+           // Distinguish mouse button
+          if (evt.which === 1) {
+            let objId = editor.getActiveGameObject()
+            let obj = Factory.createObject(objId, x, y)
+
+            if (!layer.setItem(obj)) {
+              console.warn('occupied')
+            }
+          } else if (evt.which === 3) {
+            if (!layer.unsetItemAt(x, y)) {
+              console.warn('not occupied')
+            }
+          }
         }
 
         this._prev = point

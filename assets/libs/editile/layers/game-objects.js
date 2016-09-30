@@ -33,7 +33,7 @@ GameObjects.prototype.render = function (ctx, rect, editor) {
 
     let sprite = item.getSprite()
 
-    sprite.render(ctx, x, y, w, h, 0, 0)
+    sprite.render(ctx, x, y, w, h, item.rotation, 0)
   }
 }
 

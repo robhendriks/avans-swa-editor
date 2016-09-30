@@ -5,11 +5,33 @@ const Registry = require('./sprite').Registry
 function GameObject (x, y, width, height, sprite) {
   WorldItem.call(this, x, y, width, height)
   this._sprite = sprite
+  this._rotIndex = 0
+  this._rotLimit = sprite.getRows()
+}
+
+GameObject.prototype.rotateLeft = function () {
+  this._rotIndex--
+  if (this._rotIndex < 0) {
+    this._rotIndex = this._rotLimit - 1
+  }
+}
+
+GameObject.prototype.rotateRight = function () {
+  this._rotIndex++
+  if (this._rotIndex >= this._rotLimit) {
+    this._rotIndex = 0
+  }
 }
 
 GameObject.prototype.getSprite = function () {
   return this._sprite
 }
+
+Object.defineProperty(GameObject.prototype, 'rotation', {
+  get: function () {
+    return this._rotIndex
+  }
+})
 
 util.inherits(GameObject, WorldItem)
 
