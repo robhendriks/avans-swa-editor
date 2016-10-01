@@ -1,11 +1,9 @@
 class Tool {
   constructor(id, label, supportedModes, cursor) {
-    this._id = id
-    this._label = label
-    this._supportedModes = supportedModes || []
-    this._cursor = cursor || ['default', 4, 1]
-
-    console.log(this)
+    this._id = id;
+    this._label = label;
+    this._supportedModes = supportedModes || [];
+    this._cursor = cursor || ['default', 4, 1];
   }
 
   activate() {
@@ -27,24 +25,24 @@ class Tool {
   }
 
   isModeSupported(mode) {
-    return (this.supportedModes.indexOf(mode) !== -1)
+    return (this.supportedModes.indexOf(mode) !== -1);
   }
 
   get id() {
-    return this._id
+    return this._id;
   }
 
   get label() {
-    return this._label
+    return this._label;
   }
 
   get supportedModes() {
-    return this._supportedModes
+    return this._supportedModes;
   }
 
   get cursor() {
-    return this._cursor
+    return this._cursor;
   }
 }
 
-exports.Tool = Tool
+exports.Tool = Tool;
