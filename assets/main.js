@@ -7,11 +7,11 @@ editor.init({
   selector: '#editor',
   tools: [
     new editile.tools.Hand(),
-    // new editile.tools.Rotate(),
-    // new editile.tools.Brush(),
-    // new editile.tools.Pencil(),
-    // new editile.tools.Fill(),
-    // new editile.tools.Picker()
+    new editile.tools.Rotate(),
+    new editile.tools.Brush(),
+    new editile.tools.Pencil(),
+    new editile.tools.Fill(),
+    new editile.tools.Picker()
   ],
   layers: [
     new editile.layers.Grid(),
@@ -54,7 +54,7 @@ editor.init({
       id: 'road-t-junction',
       name: 'Road T-Junction',
       size: {x: 1, y: 1},
-      spriteId: "roadtj"
+      spriteId: 'roadtj'
     },
     {
       id: 'road-corner',

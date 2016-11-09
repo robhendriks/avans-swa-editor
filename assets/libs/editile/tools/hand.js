@@ -1,10 +1,8 @@
-const util = require('util')
 const Tool = require('./tool').Tool
-const Vector = require('../math/vector').Vector
 const Box = require('../math/box').Box
 
 class Hand extends Tool {
-  constructor() {
+  constructor () {
     super('hand', 'Hand', ['tile', 'object'], ['hand.png', 5, 0])
 
     this._dragBegin = null
@@ -13,7 +11,7 @@ class Hand extends Tool {
     this._dragBox = null
   }
 
-  mouseDown(event, editor) {
+  mouseDown (event, editor) {
     if (this._dragging) {
       return
     }
@@ -22,7 +20,7 @@ class Hand extends Tool {
     editor.invalidate(true)
   }
 
-  mouseUp(event, editor) {
+  mouseUp (event, editor) {
     if (!this._dragging) {
       return
     }
@@ -32,7 +30,7 @@ class Hand extends Tool {
     editor.invalidate(true)
   }
 
-  mouseMove(event, editor) {
+  mouseMove (event, editor) {
     if (!this._dragging || !this._dragBegin) {
       return
     }
@@ -44,7 +42,7 @@ class Hand extends Tool {
     editor.invalidate(true)
   }
 
-  render(context) {
+  render (context) {
     let rect
     if ((rect = this._dragBox) === null) {
       return

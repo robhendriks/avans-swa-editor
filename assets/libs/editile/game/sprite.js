@@ -1,85 +1,89 @@
-function Sprite (id, src, rows, columns) {
-  this._id = id
-  this._src = src
-  this._rows = rows || -1
-  this._columns = columns || -1
-  this._image = null
-  this._width = 0
-  this._columnWidth = 0
-  this._height = 0
-  this._rowHeight = 0
-}
-
-Sprite.prototype.load = function (callback) {
-  this._image = new Image()
-  this._image.src = this._src
-
-  let self = this
-  this._image.onload = function () {
-    let w = self._width = this.width
-    let h = self._height = this.height
-
-    if (self._rows < 0 && self._columns < 0) {
-      if (self._height % self._width !== 0) {
-        throw new Error('invalid sprite dimensions:', self._id)
-      }
-      self._columns = 1
-      self._rows = self._height / self._width
-    }
-
-    self._columnWidth = w / self._columns
-    self._rowHeight = h / self._rows
-
-    callback()
+class Sprite {
+  constructor (id, src, rows, columns) {
+    this._id = id
+    this._src = src
+    this._rows = rows || -1
+    this._columns = columns || -1
+    this._image = null
+    this._width = 0
+    this._columnWidth = 0
+    this._height = 0
+    this._rowHeight = 0
   }
-}
 
-Sprite.prototype.render = function (ctx, x, y, w, h, row, column) {
-  ctx.drawImage(this._image, column * this._columnWidth, row * this._rowHeight,
-    this._columnWidth, this._rowHeight, x, y, w, h)
-}
+  load (callback) {
+    this._image = new Image()
+    this._image.src = this._src
 
-Sprite.prototype.getId = function () {
-  return this._id
-}
+    let self = this
+    this._image.onload = function () {
+      let w = self._width = this.width
+      let h = self._height = this.height
 
-Sprite.prototype.getSrc = function () {
-  return this._src
-}
+      if (self._rows < 0 && self._columns < 0) {
+        if (self._height % self._width !== 0) {
+          throw new Error('invalid sprite dimensions:', self._id)
+        }
+        self._columns = 1
+        self._rows = self._height / self._width
+      }
 
-Sprite.prototype.getRows = function () {
-  return this._rows
-}
+      self._columnWidth = w / self._columns
+      self._rowHeight = h / self._rows
 
-Sprite.prototype.getColumns = function () {
-  return this._columns
-}
+      callback()
+    }
+  }
 
-Sprite.prototype.getImage = function () {
-  return this._image
-}
+  render (ctx, x, y, w, h, row, column) {
+    ctx.drawImage(this._image, column * this._columnWidth, row * this._rowHeight,
+      this._columnWidth, this._rowHeight, x, y, w, h)
+  }
 
-Sprite.prototype.getWidth = function () {
-  return this._width
-}
+  getId () {
+    return this._id
+  }
 
-Sprite.prototype.getHeight = function () {
-  return this._height
+  getSrc () {
+    return this._src
+  }
+
+  getRows () {
+    return this._rows
+  }
+
+  getColumns () {
+    return this._columns
+  }
+
+  getImage () {
+    return this._image
+  }
+
+  getWidth () {
+    return this._width
+  }
+
+  getHeight () {
+    return this._height
+  }
 }
 
 exports.Sprite = Sprite
 
-/* FACTORY*/
-function Registry () {
-  this._map = {}
-}
+/* FACTORY */
+class Registry {
+  constructor () {
+    this._map = {}
+  }
 
-Registry.prototype.register = function (sprite) {
-  this._map[sprite.getId()] = sprite
-}
+  register (sprite) {
+    this._map[sprite.getId()] = sprite
+  }
 
-Registry.prototype.get = function (id) {
-  return (this._map[id] || null)
+  get (id) {
+    return (this._map[id] || null)
+  }
 }
 
 exports.Registry = new Registry()
