@@ -54,7 +54,7 @@ editor.init({
       id: 'road-t-junction',
       name: 'Road T-Junction',
       size: {x: 1, y: 1},
-      spriteId: "roadtj"
+      spriteId: 'roadtj'
     },
     {
       id: 'road-corner',

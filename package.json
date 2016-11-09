@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "standard | snazzy",
     "start": "electron .",
-    "dev": "electron . --debug"
+    "dev": "electron . --debug",
+    "pack-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --out=out"
   },
   "repository": {
     "type": "git",

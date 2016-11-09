@@ -1,37 +1,48 @@
-function Tool () {
-}
+class Tool {
+  constructor (id, label, supportedModes, cursor) {
+    this._id = id
+    this._label = label
+    this._supportedModes = supportedModes || []
+    this._cursor = cursor || ['default', 4, 1]
+  }
 
-Tool.prototype.id = undefined
-Tool.prototype.label = undefined
-Tool.prototype.cursor = ['default.png', 4, 1]
-Tool.prototype.supportedModes = []
+  activate () {
+  }
 
-/* NON-REQUIRED */
-Tool.prototype.activate = function (editor) {
-}
+  deactivate () {
+  }
 
-/* NON-REQUIRED */
-Tool.prototype.deactivate = function (editor) {
-}
+  mouseDown (event, editor) {
+  }
 
-Tool.prototype.mouseDown = function (evt, editor) {
-  throw new Error('Tool::mouseDown not yet implemented')
-}
+  mouseUp (event, editor) {
+  }
 
-Tool.prototype.mouseUp = function (evt, editor) {
-  throw new Error('Tool::mouseUp not yet implemented')
-}
+  mouseMove (event, editor) {
+  }
 
-Tool.prototype.mouseMove = function (evt, editor) {
-  throw new Error('Tool::mouseMove not yet implemented')
-}
+  render (context) {
+  }
 
-/* NON-REQUIRED */
-Tool.prototype.render = function (evt, editor) {
-}
+  isModeSupported (mode) {
+    return (this.supportedModes.indexOf(mode) !== -1)
+  }
 
-Tool.prototype.isModeSupported = function (mode) {
-  return (this.supportedModes.indexOf(mode) !== -1)
+  get id () {
+    return this._id
+  }
+
+  get label () {
+    return this._label
+  }
+
+  get supportedModes () {
+    return this._supportedModes
+  }
+
+  get cursor () {
+    return this._cursor
+  }
 }
 
 exports.Tool = Tool
