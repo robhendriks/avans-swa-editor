@@ -16,6 +16,12 @@ class World extends EventEmitter {
     this._tiles = []
   }
 
+  reset () {
+    this._objectLayer.clear()
+    this._tileLayer.clear()
+    this._tiles = []
+  }
+
   outOfBounds (x, y) {
     return ((x < 0 || x > this._width - 1) || (y < 0 || y > this._height - 1))
   }

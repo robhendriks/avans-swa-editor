@@ -108,20 +108,27 @@ openButton.addEventListener('click', function (evt) {
 let newButton = document.getElementById('new')
 newButton.addEventListener('click', function (evt) {
   evt.preventDefault()
+  editor.reset()
 })
 
 /* Save file button */
 let saveButton = document.getElementById('save')
 saveButton.addEventListener('click', function (evt) {
-  ipc.send('save-file-dialog')
+  let path
+  if ((path = editor.getPath()) !== null) {
+    editor.saveWorld(path)
+  } else {
+    ipc.send('save-file-dialog')
+  }
 })
 
-ipc.on('open-file-done', function (event, path) {
-  console.log('open:', path)
+ipc.on('open-file-done', function (event, paths) {
+  editor.loadWorld(paths[0])
 })
 
 ipc.on('save-file-done', function (event, path) {
-  console.log('save:', path)
+  console.log(path)
+  editor.saveWorld(path)
 })
 
 window.editor = editor

@@ -1,3 +1,4 @@
+const fs = require('fs')
 const util = require('util')
 const async = require('async')
 const tileCase = require('title-case')
@@ -5,6 +6,7 @@ const tileCase = require('title-case')
 const Vector = require('./math/vector').Vector
 const Tile = require('./game/tile').Tile
 
+const World = require('./game/world').World
 const Sprite = require('./game/sprite').Sprite
 const SpriteRegistry = require('./game/sprite').Registry
 const GameObjectFactory = require('./game/game-object').Factory
@@ -37,6 +39,17 @@ class Editor extends EventEmitter {
     this._mode = null
     this._gameObjects = null
     this._gameObject = null
+    this._path = null
+  }
+
+  reset () {
+    this._path = null
+
+    if (this._world !== null) {
+      this._world.reset()
+    }
+
+    this.invalidate(true)
   }
 
   translateInput (evt) {
@@ -536,6 +549,117 @@ class Editor extends EventEmitter {
     this._canvas.style.cursor = css
   }
 
+  saveWorld (path) {
+    this._path = path
+
+    if (this._world === null) {
+      return
+    }
+
+    let tiles = this._world.getTiles()
+    let objs = this._world.getObjectLayer().getItems()
+
+    let _tiles = []
+    let _objs = []
+
+    /* TILES */
+    for (let tile of tiles) {
+      _tiles.push({
+        type: tile.type,
+        x: tile.x,
+        y: tile.y
+      })
+    }
+
+    /* OBJECTS */
+    for (let obj of objs) {
+      _objs.push({
+        id: obj.id,
+        x: obj.x,
+        y: obj.y
+      })
+    }
+
+    let root = {
+      width: this._world.getWidth(),
+      height: this._world.getHeight(),
+      tiles: {
+        count: _tiles.length,
+        data: _tiles
+      },
+      objects: {
+        count: _objs.length,
+        data: _objs
+      }
+    }
+
+    fs.writeFile(path, JSON.stringify(root, null, 2));
+  }
+
+  loadWorld (path) {
+    this.reset()
+
+    let self = this
+
+    fs.readFile(path, (err, data) => {
+      this._path = path
+
+      if (err) {
+        alert(err)
+        return
+      }
+
+      let json
+
+      try {
+        json = JSON.parse(data)
+      }  catch (err) {
+        alert(err)
+        return
+      }
+
+      let w = parseInt(json.width) || 16
+      let h = parseInt(json.width) || 16
+
+      let world = new World(w, h)
+
+      let tiles = json.tiles.data
+      let objs = json.objects.data
+
+      /* TILES */
+      for (let tile of tiles) {
+        let x = parseInt(tile.x, 10)
+        let y = parseInt(tile.y, 10)
+        let t = parseInt(tile.type, 10)
+
+        if (x < 0 || y < 0 || t < 0) {
+          continue
+        }
+
+        world.addTile(x, y, t);
+      }
+
+      /* OBJECTS */
+      for (let obj of objs) {
+        let x = parseInt(obj.x, 10)
+        let y = parseInt(obj.y, 10)
+        let id = String(obj.id)
+
+        if (x < 0 || y < 0) {
+          continue
+        }
+
+        world.getObjectLayer().setItem(GameObjectFactory.createObject(id, x, y))
+      }
+
+      self.setWorld(world)
+    })
+  }
+
+  getPath () {
+    return this._path
+  }
+
   getTool (toolId) {
     for (let tool of this._tools) {
       if (tool.id === toolId) {
@@ -577,7 +701,7 @@ class Editor extends EventEmitter {
   setWorld (newValue) {
     this._world = newValue
     this.updateLayers()
-    this.invalidate()
+    this.invalidate(true)
   }
 
   getScale () {

@@ -3,8 +3,9 @@ const WorldItem = require('./world-item').WorldItem
 const Registry = require('./sprite').Registry
 
 class GameObject extends WorldItem {
-  constructor (x, y, width, height, sprite) {
+  constructor (id, x, y, width, height, sprite) {
     super(x, y, width, height)
+    this._id = id
     this._sprite = sprite
     this._rotIndex = 0
     this._rotLimit = sprite.getRows()
@@ -28,12 +29,24 @@ class GameObject extends WorldItem {
     return this._sprite
   }
 
+  get id () {
+    return this._id
+  }
+
   get rotation () {
     return this._rotIndex
   }
 
   set rotation(value) {
     this._rotIndex = math.clamp(value, 0, this._rotLimit)
+  }
+
+  get x () {
+    return this.min.x
+  }
+
+  get y () {
+    return this.min.y
   }
 }
 
@@ -61,7 +74,7 @@ class Factory {
         console.warn('invalid sprite ID:', obj.spriteId)
         return null
       }
-      return new GameObject(x, y, obj.size.x, obj.size.y, sprite)
+      return new GameObject(id, x, y, obj.size.x, obj.size.y, sprite)
     }
     console.warn('invalid game object ID:', id)
     return null

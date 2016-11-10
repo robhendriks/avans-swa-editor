@@ -38,25 +38,25 @@ app.on('activate', () => {
   }
 })
 
-ipc.on('open-file-dialog', fevent => {
+ipc.on('open-file-dialog', function (event) {
   dialog.showOpenDialog(mainWindow, {
     title: 'Open World',
     filters: [
       {name: 'JSON', extensions: ['json']}
     ],
     properties: ['openFile']
-  }, files => {
+  }, function (files) {
     if (files) event.sender.send('open-file-done', files)
   })
 })
 
-ipc.on('save-file-dialog', event => {
+ipc.on('save-file-dialog', function (event) {
   dialog.showSaveDialog(mainWindow, {
     title: 'Save World',
     filters: [
       {name: 'JSON', extensions: ['json']}
     ]
-  }, files => {
+  }, function (files) {
     if (files) event.sender.send('save-file-done', files)
   })
 })

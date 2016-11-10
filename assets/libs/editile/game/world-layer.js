@@ -91,6 +91,10 @@ class WorldLayer extends WorldItem {
       item.deselect()
     }
   }
+
+  clear () {
+    this._items = []
+  }
 }
 
 exports.WorldLayer = WorldLayer
