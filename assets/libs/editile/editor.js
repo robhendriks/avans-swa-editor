@@ -576,7 +576,8 @@ class Editor extends EventEmitter {
       _objs.push({
         id: obj.id,
         x: obj.x,
-        y: obj.y
+        y: obj.y,
+		rotation: obj.rotation
       })
     }
 
@@ -644,12 +645,16 @@ class Editor extends EventEmitter {
         let x = parseInt(obj.x, 10)
         let y = parseInt(obj.y, 10)
         let id = String(obj.id)
-
+		let rot = parseInt(obj.rotation, 10)
+		
         if (x < 0 || y < 0) {
           continue
         }
-
-        world.getObjectLayer().setItem(GameObjectFactory.createObject(id, x, y))
+		
+		let gameObj = GameObjectFactory.createObject(id, x, y)
+		gameObj.rotation = rot
+		
+        world.getObjectLayer().setItem(gameObj)
       }
 
       self.setWorld(world)
