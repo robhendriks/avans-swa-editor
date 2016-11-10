@@ -1,16 +1,17 @@
+/* GENERAL */
+$text-color: #f0f0f0;
+
 /* BUTTONS */
-$btn-text-color: #000;
-$btn-text-color-selected: #fff;
-$btn-background-color: #999999;
-$btn-background-color-selected: #646464;
+$btn-text-color: #f0f0f0;
+$btn-background-color: #454545;
+$btn-background-color-selected: #383838;
 $btn-border-width: 1px;
-$btn-border-color: #191919;
+$btn-border-color: #636363;
 $btn-border: $btn-border-width $btn-border-color solid;
-$btn-border-radius: 4px !default;
 
 /* TOGGLE BUTTONS */
-$toggle-background-color: #464646;
-$toggle-background-color-selected: #5680C2;
+$toggle-background-color: #454545;
+$toggle-background-color-selected: #383838;
 
 /* PICKER */
 $picker-row-height: 24px;
@@ -58,8 +59,8 @@ $tile-classes: (
   rock-b, rock-c, concrete-a, concrete-b);
 
 /* GENERAL */
-$background-color: #393939;
+$background-color: #282828;
 
 /* TOOLBAR */
 $toolbar-width: 250px;
-$toolbar-background-color: #727272;
+$toolbar-background-color: #535353;

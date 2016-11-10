@@ -4,6 +4,7 @@ const Tile = require('../game/tile').Tile
 class Rotate extends Tool {
   constructor () {
     super('rotate', 'Rotate', ['object'], ['rotate.png', 8, 8])
+    this._lastIndex = null
   }
 
   mouseDown (evt, editor) {
@@ -26,6 +27,8 @@ class Rotate extends Tool {
     } else if (evt.which === 3) {
       obj.rotateRight()
     }
+
+    this._lastIndex = obj.rotation
     editor.invalidate(true)
   }
 
@@ -33,6 +36,10 @@ class Rotate extends Tool {
   }
 
   mouseMove (evt, editor) {
+  }
+
+  get lastIndex () {
+    return this._lastIndex
   }
 }
 

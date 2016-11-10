@@ -1,3 +1,4 @@
+const math = require('../utils/math')
 const WorldItem = require('./world-item').WorldItem
 const Registry = require('./sprite').Registry
 
@@ -29,6 +30,10 @@ class GameObject extends WorldItem {
 
   get rotation () {
     return this._rotIndex
+  }
+
+  set rotation(value) {
+    this._rotIndex = math.clamp(value, 0, this._rotLimit)
   }
 }
 

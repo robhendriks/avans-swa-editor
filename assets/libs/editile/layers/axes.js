@@ -32,14 +32,14 @@ class Axes extends Layer {
     ctx.lineWidth = 1
 
     // X-axis
-    ctx.strokeStyle = '#DC0000'
+    ctx.strokeStyle = '#FF4A4A'
     ctx.beginPath()
     ctx.moveTo(0, world.getScreenHeight() / 2)
     ctx.lineTo(world.getScreenWidth(), world.getScreenHeight() / 2)
     ctx.stroke()
 
     // Y-axis
-    ctx.strokeStyle = '#00DC00'
+    ctx.strokeStyle = '#4AFF4A'
     ctx.beginPath()
     ctx.moveTo(world.getScreenWidth() / 2, 0)
     ctx.lineTo(world.getScreenWidth() / 2, world.getScreenHeight())

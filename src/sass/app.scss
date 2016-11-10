@@ -17,14 +17,14 @@ body,
 }
 
 html {
-  // background-color: $background-color;
-  @include shade-selected(darken($toggle-background-color, 10%), 10%, 0);
+  background-color: $background-color;
 }
 
 body {
   margin: 0;
   padding: 0;
-
+  color: $text-color;
+  
   -webkit-font-smoothing: antialiased;
 }
 

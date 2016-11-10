@@ -1,8 +1,8 @@
 @font-face {
-  font-family: 'bfont';
+  font-family: 'Open Sans';
   font-style: normal;
-  font-weight: 300;
-  src: local('bfont'), url(../fonts/bfont.ttf);
+  font-weight: 400;
+  src: local('Open Sans'), local('OpenSans'), url(../fonts/OpenSans.ttf);
 }
 
 html {
@@ -10,7 +10,7 @@ html {
 }
 
 body {
-  font-family: 'bfont', sans-serif;
+  font-family: 'Open Sans', 'Comic Sans MS';
   font-size: 1.4rem;
   line-height: 1.5rem;
   font-weight: normal;
@@ -30,6 +30,9 @@ h5 { font-size: 1.8rem; line-height: 1.5; letter-spacing: -.05rem; }
 h6 { font-size: 1.5rem; line-height: 1.6; letter-spacing: 0; }
 
 h3.toolbar-title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   margin: 0 15px 0 0;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  color: darken($text-color, 20%);
 }

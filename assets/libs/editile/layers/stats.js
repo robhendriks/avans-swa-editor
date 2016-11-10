@@ -16,7 +16,7 @@ class Stats extends Layer {
       return
     }
 
-    ctx.font = '16px bfont'
+    ctx.font = '16px Open Sans'
     ctx.fillStyle = '#4a4a4a'
 
     let str = ''

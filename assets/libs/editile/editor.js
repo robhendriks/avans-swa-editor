@@ -490,6 +490,11 @@ class Editor extends EventEmitter {
       }
       oldTool.deactivate(this)
     }
+
+    if (newTool.supportedModes.length === 1) {
+      this.setMode(newTool.supportedModes[0])
+    }
+
     this._setToolCursor(newTool)
     newTool.activate(this)
     this._tool = newTool

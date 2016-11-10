@@ -18,7 +18,7 @@ editor.init({
     new editile.layers.Axes(),
     new editile.layers.Tiles(),
     new editile.layers.GameObjects(),
-    new editile.layers.Stats()
+    // new editile.layers.Stats()
   ],
   sprites: [
     new editile.Sprite('a', 'assets/images/tiles.png', 4, 4)
@@ -36,31 +36,46 @@ editor.init({
       id: 'road-cap',
       name: 'Road Cap',
       size: {x: 1, y: 1},
-      spriteId: 'roadcp'
+      spriteId: 'roadcp',
+      graph: {
+        nodes: ['S']
+      }
     },
     {
       id: 'road-straight',
       name: 'Road Straight',
       size: {x: 1, y: 1},
-      spriteId: 'road'
+      spriteId: 'road',
+      graph: {
+        nodes: ['N', 'S']
+      }
     },
     {
       id: 'road-junction',
       name: 'Road Junction',
       size: {x: 1, y: 1},
-      spriteId: 'roadj'
+      spriteId: 'roadj',
+      graph: {
+        nodes: ['N', 'E', 'S', 'W']
+      }
     },
     {
       id: 'road-t-junction',
       name: 'Road T-Junction',
       size: {x: 1, y: 1},
-      spriteId: 'roadtj'
+      spriteId: 'roadtj',
+      graph: {
+        nodes: ['E', 'S', 'W']
+      }
     },
     {
       id: 'road-corner',
       name: 'Road Corner',
       size: {x: 1, y: 1},
-      spriteId: 'roadc'
+      spriteId: 'roadc',
+      graph: {
+        nodes: ['E', 'S']
+      }
     },
     {
       id: 'building-a',

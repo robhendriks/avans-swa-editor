@@ -31,7 +31,7 @@ class Grid extends Layer {
 
     ctx.save()
     ctx.lineWidth = 1
-    ctx.strokeStyle = '#404040'
+    ctx.strokeStyle = '#535353'
 
     // X-axis
     for (let i = 0; i <= world.getWidth(); i++) {

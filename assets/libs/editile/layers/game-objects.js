@@ -17,6 +17,9 @@ class GameObjects extends Layer {
 
     let layer = world._objectLayer
 
+    ctx.strokeStyle = 'white'
+    ctx.fillStyle = 'rgba(255, 255, 255, .1)'
+
     for (let item of layer.getItems()) {
       let x = item.min.x * Tile.WIDTH
       let y = item.min.y * Tile.HEIGHT
@@ -28,6 +31,14 @@ class GameObjects extends Layer {
       let sprite = item.getSprite()
 
       sprite.render(ctx, x, y, w, h, item.rotation, 0)
+
+      if (item.selected) {
+        ctx.fillRect(x, y, w, h)
+
+        ctx.beginPath()
+        ctx.rect(x, y, w, h)
+        ctx.stroke()
+      }
     }
   }
 }

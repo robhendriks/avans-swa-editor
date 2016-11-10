@@ -6,10 +6,10 @@ class Tool {
     this._cursor = cursor || ['default', 4, 1]
   }
 
-  activate () {
+  activate (editor) {
   }
 
-  deactivate () {
+  deactivate (editor) {
   }
 
   mouseDown (event, editor) {

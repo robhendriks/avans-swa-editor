@@ -79,6 +79,11 @@ class Brush extends Tool {
               let objId = editor.getActiveGameObject()
               let obj = Factory.createObject(objId, x, y)
 
+              let rotateTool
+              if ((rotateTool = editor.getTool('rotate')) !== null) {
+                obj.rotation = rotateTool.lastIndex
+              }
+
               if (!layer.setItem(obj)) {
                 console.warn('occupied')
               }

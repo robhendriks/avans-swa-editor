@@ -82,6 +82,11 @@ class Box {
     }
     return true
   }
+
+  toString () {
+    return this.min.x + ':' + this.min.y + ','
+         + this.max.x + ':' + this.max.y;
+  }
 }
 
 exports.Box = Box

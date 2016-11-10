@@ -79,6 +79,18 @@ class WorldLayer extends WorldItem {
     }
     return false
   }
+
+  selectAll () {
+    for (let item of this._items) {
+      item.select()
+    }
+  }
+
+  deselectAll () {
+    for (let item of this._items) {
+      item.deselect()
+    }
+  }
 }
 
 exports.WorldLayer = WorldLayer
