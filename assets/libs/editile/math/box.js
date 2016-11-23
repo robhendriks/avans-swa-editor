@@ -61,7 +61,7 @@ class Box {
 
   containsPoint (point) {
     if (point.x < this.min.x || point.x > this.max.x ||
-        point.y < this.min.y || point.y > this.max.y) {
+      point.y < this.min.y || point.y > this.max.y) {
       return false
     }
     return true
@@ -69,7 +69,7 @@ class Box {
 
   containsBox (box) {
     if ((this.min.x <= box.min.x) && (box.max.x <= this.max.x) &&
-        (this.min.y <= box.min.y) && (box.max.y <= this.max.y)) {
+      (this.min.y <= box.min.y) && (box.max.y <= this.max.y)) {
       return true
     }
     return false
@@ -77,15 +77,14 @@ class Box {
 
   intersectsBox (box) {
     if (box.max.x < this.min.x || box.min.x > this.max.x ||
-        box.max.y < this.min.y || box.min.y > this.max.y) {
+      box.max.y < this.min.y || box.min.y > this.max.y) {
       return false
     }
     return true
   }
 
   toString () {
-    return this.min.x + ':' + this.min.y + ','
-         + this.max.x + ':' + this.max.y;
+    return this.min.x + ':' + this.min.y + ',' + this.max.x + ':' + this.max.y
   }
 }
 

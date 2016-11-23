@@ -13,7 +13,7 @@ class Hand extends Tool {
     this._dragBox = null
   }
 
-  deactivate () {
+  deactivate (editor) {
     let world
     if ((world = editor.getWorld()) !== null) {
       world.getObjectLayer().deselectAll()
@@ -55,7 +55,7 @@ class Hand extends Tool {
 
     let a = this._dragBegin.clone().divideScalar(Tile.WIDTH).floor()
     let b = this._dragEnd.clone().divideScalar(Tile.WIDTH).floor()
-    let area = new Box(a.clone().min(b), a.clone().max(b));
+    let area = new Box(a.clone().min(b), a.clone().max(b))
 
     for (let item of layer.getItems()) {
       item.selected = area.intersectsBox(item)

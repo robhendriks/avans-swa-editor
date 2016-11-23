@@ -8,16 +8,16 @@ let mainWindow
 
 function createWindow () {
   let windowOptions = {
-    width: 1024,
+    width: 1280,
     minWidth: 1024,
-    height: 768,
+    height: 1024,
     minHeight: 768,
     title: app.getName()
   }
 
   mainWindow = new BrowserWindow(windowOptions)
   mainWindow.loadURL(`file://${__dirname}/index.html`)
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', () => {
     mainWindow = null

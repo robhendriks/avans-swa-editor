@@ -37,7 +37,7 @@ class GameObject extends WorldItem {
     return this._rotIndex
   }
 
-  set rotation(value) {
+  set rotation (value) {
     this._rotIndex = math.clamp(value, 0, this._rotLimit)
   }
 

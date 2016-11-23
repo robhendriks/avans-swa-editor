@@ -47,8 +47,6 @@
 }
 
 .tile {
-  border-radius: $tile-dest-width;
-  
   @include iconize(
     $tile-dest-width, $tile-dest-height,
     $tile-src, $tile-src-width, $tile-src-height,

@@ -4,7 +4,7 @@ const Registry = require('../game/sprite').Registry
 
 class Tiles extends Layer {
   constructor () {
-    super('tiles', 'Tiles', 1)
+    super('tiles', 'Tiles', 2)
   }
 
   init (editor) {

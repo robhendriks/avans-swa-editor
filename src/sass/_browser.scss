@@ -1,0 +1,29 @@
+.browser {
+  overflow-y: scroll;
+  height: 100%;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 4px;
+      //background-color: $btn-background-color;
+      border: $btn-border;
+      border-radius: 3px;
+
+      &.active {
+        background-color: $btn-background-color;
+      }
+
+      a {
+        display: inline-block;
+        line-height: 1rem;
+        padding: 5px;
+      }
+    }
+  }
+}

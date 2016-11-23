@@ -4,7 +4,9 @@
 @import 'typography';
 @import 'icons';
 @import 'buttons';
+@import 'panels';
 @import 'picker';
+@import 'browser';
 
 * {
   box-sizing: border-box;
@@ -16,40 +18,105 @@ body,
   height: 100%;
 }
 
+body,
 html {
-  background-color: $background-color;
+  overflow: hidden;
+  margin: 0;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   color: $text-color;
-  
   -webkit-font-smoothing: antialiased;
+  background-color: $background-color;
 }
 
 #app {
-  cursor: default;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
   @extend %noselect;
 }
 
+.app-vertical,
+.app-horizontal {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.app-vertical,
+.app-horizontal,
+.app-top,
+.app-bottom,
+.app-left,
+.app-right {
+  overflow: hidden;
+}
+
+.app-vertical {
+  flex-direction: column;
+}
+
+.app-horizontal {
+  flex-direction: row;
+}
+
+.app-light {
+  flex: 0;
+}
+
+.app-heavy {
+  flex: 1;
+}
+
 #toolbar {
-  position: absolute;
-  overflow: scroll;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: $toolbar-width;
-  padding: 10px;
-  background-color: $toolbar-background-color;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: $toolbar-height;
+  background-color: $panel-light;
+
+  .toolbar-group {
+    flex: 1;
+
+    &-left {
+      text-align: left;
+      margin-left: 4px;
+    }
+    &-center {
+      text-align: center;
+    }
+    &-right {
+      text-align: right;
+      margin-right: 4px;
+    }
+
+    .btns {
+      display: inline-block;
+      margin: 0;
+    }
+  }
 }
 
 #content {
-  position: absolute;
   overflow: hidden;
-  left: $toolbar-width;
-  top: 0;
-  right: 0;
-  height: 100%;
+}
+
+#editor {
+}
+
+#inspector {
+  min-width: $inspector-width;
+  //border-left: $panel-border;
+}
+
+#browser {
+  min-height: $browser-height;
+}
+
+#statusbar {
+  min-height: $statusbar-height;
+  background-color: $panel-light;
 }

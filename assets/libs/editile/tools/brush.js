@@ -7,25 +7,20 @@ class Brush extends Tool {
 
     this._dragging = null
     this._stroke = null
-    this._points = []
+    this._point = null
     this._prev = null
-  }
-
-  _addPoint (point) {
-    if (this._points.length >= 20) {
-      this._points.shift()
-    }
-    this._points.push(point)
   }
 
   mouseDown (evt, editor) {
     if (this._dragging || editor.getActiveMaterial() == null) {
       return
     }
+
+    this._point = editor.transformInput(evt)
     this._dragging = true
     this._stroke = (evt.which === 3
-      ? 'rgba(86, 0, 0, .3)'
-      : 'rgba(0, 86, 0, .3')
+      ? 'rgba(255, 74, 74, .3)'
+      : 'rgba(74, 255, 74, .3')
 
     editor.invalidate(true)
   }
@@ -37,20 +32,19 @@ class Brush extends Tool {
 
     this._dragging = false
     this._stroke = null
-    this._points = []
+    this._point = null
     this._prev = null
 
     editor.invalidate(true)
   }
 
   mouseMove (evt, editor) {
-    if (!this._dragging || !this._points) {
+    if (!this._dragging || !this._point) {
       return
     }
 
     let mat = editor.getActiveMaterial()
-    let point = editor.transformInput(evt)
-    this._addPoint(point)
+    this._point = editor.transformInput(evt)
 
     let world
     if ((world = editor.getWorld()) !== null) {
@@ -74,7 +68,7 @@ class Brush extends Tool {
           } else if (editor.getMode() === 'object') {
             let layer = world.getObjectLayer()
 
-             // Distinguish mouse button
+            // Distinguish mouse button
             if (evt.which === 1) {
               let objId = editor.getActiveGameObject()
               let obj = Factory.createObject(objId, x, y)
@@ -103,22 +97,15 @@ class Brush extends Tool {
   }
 
   render (ctx) {
-    ctx.strokeStyle = this._stroke
-    ctx.lineJoin = 'round'
-    ctx.lineCap = 'round'
-    ctx.lineWidth = 8
-
-    ctx.beginPath()
-
-    for (let i = 0, il = this._points.length; i < il; i++) {
-      let point = this._points[i]
-      if (i === il - 1) {
-        ctx.moveTo(point.x, point.y)
-      } else {
-        ctx.lineTo(point.x, point.y)
-      }
+    if (!this._point) {
+      return
     }
 
+    ctx.strokeStyle = this._stroke
+    ctx.lineWidth = 3
+
+    ctx.beginPath()
+    ctx.ellipse(this._point.x, this._point.y, 16, 16, 0, 0, 2 * Math.PI)
     ctx.stroke()
   }
 }

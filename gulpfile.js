@@ -2,6 +2,7 @@ const del = require('del')
 const gulp = require('gulp')
 const sass = require('gulp-sass')
 const sassLint = require('gulp-sass-lint')
+const sourcemaps = require('gulp-sourcemaps')
 
 const paths = {
   styles: {
@@ -16,8 +17,10 @@ gulp.task('clean', function () {
 
 gulp.task('styles', function () {
   return gulp.src(paths.styles.src)
+    .pipe(sourcemaps.init())
     .pipe(sass()
       .on('error', sass.logError))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.styles.dest))
 })
 

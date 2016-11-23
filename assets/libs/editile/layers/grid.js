@@ -3,7 +3,7 @@ const Tile = require('../game/tile').Tile
 
 class Grid extends Layer {
   constructor () {
-    super('grid', 'Grid', 2)
+    super('grid', 'Grid', 1)
     this.on('update', this.update.bind(this))
   }
 

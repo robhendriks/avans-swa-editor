@@ -1,5 +1,4 @@
 const fs = require('fs')
-const util = require('util')
 const async = require('async')
 const tileCase = require('title-case')
 
@@ -234,6 +233,7 @@ class Editor extends EventEmitter {
     let materials = this._materials = options['materials'] || []
 
     let elem = this._materialsElem = document.getElementById('materials')
+    if (!elem) return; // PLEASE REMOVE
     let list = document.createElement('ul')
 
     for (let material of materials) {
@@ -243,7 +243,6 @@ class Editor extends EventEmitter {
       let anchor = document.createElement('a')
       anchor.setAttribute('href', '#')
 
-      let text = document.createTextNode(tileCase(material))
       let icon = document.createElement('i')
       icon.className = 'tile ' + material
 
@@ -259,7 +258,6 @@ class Editor extends EventEmitter {
       })
 
       anchor.appendChild(icon)
-      anchor.appendChild(text)
       listItem.appendChild(anchor)
       list.appendChild(listItem)
     }
@@ -275,6 +273,7 @@ class Editor extends EventEmitter {
     let gameObjects = this._gameObjects = options['objects'] || []
 
     let elem = document.getElementById('gameObjects')
+    if (!elem) return; // PLEASE REMOVE
     let list = document.createElement('ul')
 
     for (let gameObject of gameObjects) {
@@ -287,11 +286,11 @@ class Editor extends EventEmitter {
       let sprite = SpriteRegistry.get(gameObject.spriteId)
 
       let imgSrc = sprite.getSrc()
-      let ratio = 16 / sprite.getWidth()
-      let imgWidth = 16
+      let ratio = 32 / sprite.getWidth()
+      let imgWidth = 32
       let imgHeight = sprite.getHeight() * ratio
 
-      anchor.innerHTML = `<i class="icon" style="background-image: url(${imgSrc}); background-size: ${imgWidth}px ${imgHeight}px;"></i> ` + gameObject.name
+      anchor.innerHTML = `<i class="icon" style="width: ${imgWidth}px; height: ${imgWidth}px; background-image: url(${imgSrc}); background-size: ${imgWidth}px ${imgHeight}px;"></i> `
 
       let self = this
 
@@ -321,9 +320,15 @@ class Editor extends EventEmitter {
       let zoom = button.getAttribute('data-zoom')
 
       switch (zoom) {
-        case 'in': this._wrapClick(button, this.zoomIn.bind(this)); break
-        case 'out': this._wrapClick(button, this.zoomOut.bind(this)); break
-        default: this._wrapClick(button, this.resetZoom.bind(this)); break
+        case 'in':
+          this._wrapClick(button, this.zoomIn.bind(this))
+          break
+        case 'out':
+          this._wrapClick(button, this.zoomOut.bind(this))
+          break
+        default:
+          this._wrapClick(button, this.resetZoom.bind(this))
+          break
       }
     }
   }
@@ -351,7 +356,6 @@ class Editor extends EventEmitter {
       if (layer.isVisible()) {
         button.classList.add('active')
       }
-      let self = this
       button.addEventListener('click', function (evt) {
         evt.preventDefault()
         layer.setVisible(!layer.isVisible())
@@ -378,21 +382,21 @@ class Editor extends EventEmitter {
 
   _mouseDown (evt) {
     if (this._tool !== null &&
-        this._tool.isModeSupported(this._mode)) {
+      this._tool.isModeSupported(this._mode)) {
       this._tool.mouseDown(evt, this)
     }
   }
 
   _mouseUp (evt) {
     if (this._tool !== null &&
-        this._tool.isModeSupported(this._mode)) {
+      this._tool.isModeSupported(this._mode)) {
       this._tool.mouseUp(evt, this)
     }
   }
 
   _mouseMove (evt) {
     if (this._tool !== null &&
-        this._tool.isModeSupported(this._mode)) {
+      this._tool.isModeSupported(this._mode)) {
       this._tool.mouseMove(evt, this)
     }
   }
@@ -429,8 +433,10 @@ class Editor extends EventEmitter {
       let y = Math.round(this._y = (h / 2 - world.getScreenHeight() * s / 2) / s)
 
       let rect = {
-        x: x, y: y,
-        w: w, h: h
+        x: x,
+        y: y,
+        w: w,
+        h: h
       }
 
       for (let i = 0; i < this._layers.length; i++) {
@@ -449,7 +455,7 @@ class Editor extends EventEmitter {
           if (layer.isScalable()) {
             ctx.scale(r * s, r * s)
           } else {
-            ctx.scale(r, r);
+            ctx.scale(r, r)
           }
 
           // Translate layer if requested
@@ -480,12 +486,12 @@ class Editor extends EventEmitter {
   }
 
   zoomOut () {
-    this._scale = Math.max(this._scale - .25, .5)
+    this._scale = Math.max(this._scale - 0.25, 0.5)
     this.invalidate()
   }
 
   zoomIn () {
-    this._scale = Math.min(this._scale + .25, 2)
+    this._scale = Math.min(this._scale + 0.25, 2.0)
     this.invalidate()
   }
 
@@ -577,7 +583,7 @@ class Editor extends EventEmitter {
         id: obj.id,
         x: obj.x,
         y: obj.y,
-		rotation: obj.rotation
+        rotation: obj.rotation
       })
     }
 
@@ -594,7 +600,7 @@ class Editor extends EventEmitter {
       }
     }
 
-    fs.writeFile(path, JSON.stringify(root, null, 2));
+    fs.writeFile(path, JSON.stringify(root, null, 2))
   }
 
   loadWorld (path) {
@@ -614,7 +620,7 @@ class Editor extends EventEmitter {
 
       try {
         json = JSON.parse(data)
-      }  catch (err) {
+      } catch (err) {
         alert(err)
         return
       }
@@ -637,7 +643,7 @@ class Editor extends EventEmitter {
           continue
         }
 
-        world.addTile(x, y, t);
+        world.addTile(x, y, t)
       }
 
       /* OBJECTS */
@@ -645,15 +651,15 @@ class Editor extends EventEmitter {
         let x = parseInt(obj.x, 10)
         let y = parseInt(obj.y, 10)
         let id = String(obj.id)
-		let rot = parseInt(obj.rotation, 10)
-		
+        let rot = parseInt(obj.rotation, 10)
+
         if (x < 0 || y < 0) {
           continue
         }
-		
-		let gameObj = GameObjectFactory.createObject(id, x, y)
-		gameObj.rotation = rot
-		
+
+        let gameObj = GameObjectFactory.createObject(id, x, y)
+        gameObj.rotation = rot
+
         world.getObjectLayer().setItem(gameObj)
       }
 
@@ -732,7 +738,7 @@ class Editor extends EventEmitter {
     return null
   }
 
-  getMaterialByIndex(index) {
+  getMaterialByIndex (index) {
     return this._materials[index] || null
   }
 
@@ -747,7 +753,9 @@ class Editor extends EventEmitter {
       return
     }
 
-    let nodes = document.querySelectorAll('li[data-material]'), theNode
+    let nodes = document.querySelectorAll('li[data-material]')
+    let theNode
+
     if (nodes) {
       for (let node of nodes) {
         let attr = node.getAttribute('data-material')

@@ -17,19 +17,17 @@ editor.init({
     new editile.layers.Grid(),
     new editile.layers.Axes(),
     new editile.layers.Tiles(),
-    new editile.layers.GameObjects(),
-    // new editile.layers.Stats()
+    new editile.layers.GameObjects()
   ],
   sprites: [
     new editile.Sprite('a', 'assets/images/tiles.png', 4, 4)
   ],
   materials: [
-    'earth-a', 'earth-b',
-    'ground-a', 'ground-b',
-    'grass-a', 'grass-b', 'grass-c', 'grass-d',
-    'sand-a', 'sand-b', 'sand-c',
-    'rock-a', 'rock-b', 'rock-c',
-    'concrete-a', 'concrete-b'
+    'water',
+    'dirt-1', 'dirt-2', 'dirt-3',
+    'grass-1', 'grass-2', 'grass-3', 'grass-4',
+    'sand-1', 'sand-2', 'sand-3', 'sand-4',
+    'rock-1', 'rock-2', 'rock-3', 'rock-4'
   ],
   objects: [
     {

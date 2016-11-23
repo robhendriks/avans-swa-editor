@@ -45,22 +45,38 @@ $icon-classes: (
 
 /* TILE ICONS */
 $tile-src: '../images/tiles.png';
-$tile-src-width: 64px;
-$tile-src-height: 64px;
+$tile-src-width: 128px;
+$tile-src-height: 128px;
 $tile-src-columns: 4;
 
-$tile-dest-width: 16px;
-$tile-dest-height: 16px;
+$tile-dest-width: 32px;
+$tile-dest-height: 32px;
 
 $tile-classes: (
-  earth-a, earth-b, ground-a, ground-b,
-  grass-a, grass-b, grass-c, grass-d,
-  sand-a, sand-b, sand-c, rock-a,
-  rock-b, rock-c, concrete-a, concrete-b);
+  water,
+  dirt-1, dirt-2, dirt-3,
+  grass-1, grass-2, grass-3, grass-4,
+  sand-1, sand-2, sand-3, sand-4,
+  rock-1, rock-2, rock-3, rock-4);
 
 /* GENERAL */
 $background-color: #282828;
 
+/* PANELS */
+$panel-light: #535353;
+$panel-dark: #424242;
+$panel-border: 2px $panel-dark solid;
+
 /* TOOLBAR */
-$toolbar-width: 250px;
-$toolbar-background-color: #535353;
+$toolbar-height: 32px;
+
+/* CONTENT */
+
+/* INSPECTOR */
+$inspector-width: 224px;
+
+/* BROWSER */
+$browser-height: 168px;
+
+/* STATUSBAR */
+$statusbar-height: 20px;

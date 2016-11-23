@@ -5,7 +5,12 @@
 /* UI ICONS */
 /* TILE ICONS */
 /* GENERAL */
+/* PANELS */
 /* TOOLBAR */
+/* CONTENT */
+/* INSPECTOR */
+/* BROWSER */
+/* STATUSBAR */
 .to-left {
   float: left; }
 
@@ -45,40 +50,27 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: 4.0rem;
-  line-height: 1.2;
-  letter-spacing: -.1rem; }
+  line-height: 1.2em; }
 
 h2 {
   font-size: 3.6rem;
-  line-height: 1.25;
-  letter-spacing: -.1rem; }
+  line-height: 1.25em; }
 
 h3 {
   font-size: 3.0rem;
-  line-height: 1.3;
-  letter-spacing: -.1rem; }
+  line-height: 1.3em; }
 
 h4 {
   font-size: 2.4rem;
-  line-height: 1.35;
-  letter-spacing: -.08rem; }
+  line-height: 1.35em; }
 
 h5 {
   font-size: 1.8rem;
-  line-height: 1.5;
-  letter-spacing: -.05rem; }
+  line-height: 1.5em; }
 
 h6 {
   font-size: 1.5rem;
-  line-height: 1.6;
-  letter-spacing: 0; }
-
-h3.toolbar-title {
-  font-size: 1.2rem;
-  margin: 0 15px 0 0;
-  text-transform: uppercase;
-  letter-spacing: .1rem;
-  color: #bdbdbd; }
+  line-height: 1.6em; }
 
 .icon {
   position: relative;
@@ -135,46 +127,45 @@ h3.toolbar-title {
       background-image: url("../images/icons@2x.png"); } }
 
 .tile {
-  border-radius: 16px;
   position: relative;
   display: inline-block;
-  height: 16px;
-  width: 16px;
+  height: 32px;
+  width: 32px;
   background-image: url("../images/tiles.png");
   background-repeat: no-repeat;
-  background-size: 64px 64px; }
-  .tile.earth-a {
+  background-size: 128px 128px; }
+  .tile.water {
     background-position: 0px -0px; }
-  .tile.earth-b {
-    background-position: -16px -0px; }
-  .tile.ground-a {
+  .tile.dirt-1 {
     background-position: -32px -0px; }
-  .tile.ground-b {
-    background-position: -48px -0px; }
-  .tile.grass-a {
-    background-position: 0px -16px; }
-  .tile.grass-b {
-    background-position: -16px -16px; }
-  .tile.grass-c {
-    background-position: -32px -16px; }
-  .tile.grass-d {
-    background-position: -48px -16px; }
-  .tile.sand-a {
+  .tile.dirt-2 {
+    background-position: -64px -0px; }
+  .tile.dirt-3 {
+    background-position: -96px -0px; }
+  .tile.grass-1 {
     background-position: 0px -32px; }
-  .tile.sand-b {
-    background-position: -16px -32px; }
-  .tile.sand-c {
+  .tile.grass-2 {
     background-position: -32px -32px; }
-  .tile.rock-a {
-    background-position: -48px -32px; }
-  .tile.rock-b {
-    background-position: 0px -48px; }
-  .tile.rock-c {
-    background-position: -16px -48px; }
-  .tile.concrete-a {
-    background-position: -32px -48px; }
-  .tile.concrete-b {
-    background-position: -48px -48px; }
+  .tile.grass-3 {
+    background-position: -64px -32px; }
+  .tile.grass-4 {
+    background-position: -96px -32px; }
+  .tile.sand-1 {
+    background-position: 0px -64px; }
+  .tile.sand-2 {
+    background-position: -32px -64px; }
+  .tile.sand-3 {
+    background-position: -64px -64px; }
+  .tile.sand-4 {
+    background-position: -96px -64px; }
+  .tile.rock-1 {
+    background-position: 0px -96px; }
+  .tile.rock-2 {
+    background-position: -32px -96px; }
+  .tile.rock-3 {
+    background-position: -64px -96px; }
+  .tile.rock-4 {
+    background-position: -96px -96px; }
 
 .btn {
   display: inline-block;
@@ -215,6 +206,29 @@ h3.toolbar-title {
     display: block; }
     .btns.vertical .btn:not(:last-child) {
       border-bottom-width: 0; }
+
+.panel {
+  display: flex;
+  padding: 1px;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-content: flex-start;
+  background-color: #424242; }
+  .panel .panel-title,
+  .panel .panel-body {
+    background-color: #535353; }
+  .panel .panel-header {
+    flex: 0; }
+  .panel .panel-body {
+    flex: 1;
+    overflow: hidden; }
+  .panel h3.panel-title {
+    display: inline-block;
+    margin: 0;
+    padding: 0 6px;
+    font-size: 1.3rem;
+    line-height: 24px;
+    border-bottom: none; }
 
 div.picker {
   display: inline-block;
@@ -285,6 +299,26 @@ div.picker {
           top: 3px;
           margin-right: 8px; }
 
+.browser {
+  overflow-y: scroll;
+  height: 100%; }
+  .browser ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0; }
+    .browser ul li {
+      margin: 4px;
+      border: 1px #636363 solid;
+      border-radius: 3px; }
+      .browser ul li.active {
+        background-color: #454545; }
+      .browser ul li a {
+        display: inline-block;
+        line-height: 1rem;
+        padding: 5px; }
+
 * {
   box-sizing: border-box; }
 
@@ -293,33 +327,79 @@ body,
 #app {
   height: 100%; }
 
+body,
 html {
-  background-color: #282828; }
+  overflow: hidden;
+  margin: 0; }
 
 body {
-  margin: 0;
-  padding: 0;
   color: #f0f0f0;
-  -webkit-font-smoothing: antialiased; }
+  -webkit-font-smoothing: antialiased;
+  background-color: #282828; }
 
 #app {
-  cursor: default; }
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column; }
+
+.app-vertical,
+.app-horizontal {
+  display: flex;
+  flex-wrap: nowrap; }
+
+.app-vertical,
+.app-horizontal,
+.app-top,
+.app-bottom,
+.app-left,
+.app-right {
+  overflow: hidden; }
+
+.app-vertical {
+  flex-direction: column; }
+
+.app-horizontal {
+  flex-direction: row; }
+
+.app-light {
+  flex: 0; }
+
+.app-heavy {
+  flex: 1; }
 
 #toolbar {
-  position: absolute;
-  overflow: scroll;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  height: 100%;
-  width: 250px;
-  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 32px;
   background-color: #535353; }
+  #toolbar .toolbar-group {
+    flex: 1; }
+    #toolbar .toolbar-group-left {
+      text-align: left;
+      margin-left: 4px; }
+    #toolbar .toolbar-group-center {
+      text-align: center; }
+    #toolbar .toolbar-group-right {
+      text-align: right;
+      margin-right: 4px; }
+    #toolbar .toolbar-group .btns {
+      display: inline-block;
+      margin: 0; }
 
 #content {
-  position: absolute;
-  overflow: hidden;
-  left: 250px;
-  top: 0;
-  right: 0;
-  height: 100%; }
+  overflow: hidden; }
+
+#inspector {
+  min-width: 224px; }
+
+#browser {
+  min-height: 168px; }
+
+#statusbar {
+  min-height: 20px;
+  background-color: #535353; }
+
+/*# sourceMappingURL=app.css.map */
