@@ -1,39 +1,22 @@
 {
   "name": "editile",
   "version": "1.0.0",
-  "description": "Simple level editor",
+  "description": "",
   "main": "main.js",
   "scripts": {
-    "lint": "standard | snazzy",
-    "start": "electron .",
-    "dev": "electron . --debug",
-    "pack-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --prune=true --out=out"
+    "start": "electron ./"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/robhendriks/editile.git"
+    "url": "git+https://github.com/robhendriks/editile.git"
   },
-  "keywords": [],
-  "author": "Rob Hendriks <cyanidenl@icloud.com>",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/robhendriks/editile/issues"
   },
-  "homepage": "https://github.com/robhendriks/editile",
+  "homepage": "https://github.com/robhendriks/editile#readme",
   "dependencies": {
-    "async": "^2.0.1",
-    "jquery": "^3.1.1",
-    "title-case": "^2.1.0"
-  },
-  "devDependencies": {
-    "del": "^2.2.2",
-    "electron": "^1.4.1",
-    "electron-packager": "^8.0.0",
-    "gulp": "^3.9.1",
-    "gulp-sass": "^2.3.2",
-    "gulp-sass-lint": "^1.2.0",
-    "gulp-sourcemaps": "^1.9.1",
-    "snazzy": "^5.0.0",
-    "standard": "^8.1.0"
+    "electron-prebuilt": "^1.4.10"
   }
 }

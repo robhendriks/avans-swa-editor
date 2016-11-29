@@ -1,3 +1,0 @@
-# editile
-
-Simple level editor

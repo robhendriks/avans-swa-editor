@@ -1,100 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="assets/css/app.css">
+  <title>Editile</title>
+  <link href="" rel="stylesheet">
 </head>
 <body>
-<div id="app" class="app-vertical">
-  <div id="toolbar" class="app-light">
-
-    <div class="toolbar-group toolbar-group-left">
-      <!--world-->
-      <div class="btns horizontal">
-        <a href="#" class="btn" id="open" title="Open World"><i class="icon folder"></i></a>
-        <a href="#" class="btn" id="new" title="New World"><i class="icon new"></i></a>
-        <a href="#" class="btn" id="save" title="Save World"><i class="icon check"></i></a>
-      </div>
-      <!--/world-->
-    </div>
-
-    <div class="toolbar-group toolbar-group-center">
-      <!--tools-->
-      <div class="btns horizontal">
-        <a href="#" class="btn toggle" title="Hand" data-tool="hand"><i class="icon hand"></i></a>
-        <a href="#" class="btn toggle" title="Rotate" data-tool="rotate"><i class="icon rotate"></i></a>
-        <a href="#" class="btn toggle" title="Pencil" data-tool="pencil"><i class="icon pencil"></i></a>
-        <a href="#" class="btn toggle" title="Brush" data-tool="brush"><i class="icon brush"></i></a>
-        <a href="#" class="btn toggle" title="Flood Fill" data-tool="fill"><i class="icon flood-fill"></i></a>
-        <a href="#" class="btn toggle" title="Picker" data-tool="picker"><i class="icon picker"></i></a>
-      </div>
-      <!--/tools-->
-    </div>
-
-    <div class="toolbar-group toolbar-group-right">
-      <!--zoom-->
-      <div class="btns horizontal">
-        <a href="#" class="btn" title="Reset Zoom" data-zoom="reset"><i class="icon reset-zoom"></i></a>
-        <a href="#" class="btn" title="Zoom Out" data-zoom="out"><i class="icon zoom-out"></i></a>
-        <a href="#" class="btn" title="Zoom In" data-zoom="in"><i class="icon zoom-in"></i></a>
-      </div>
-      <!--/zoom-->
-
-      <!--layers-->
-      <div class="btns horizontal">
-        <a class="btn toggle" title="Grid" data-layer="grid"><i class="icon grid"></i></a>
-        <a class="btn toggle" title="Axes" data-layer="axes"><i class="icon axes"></i></a>
-        <a class="btn toggle" title="Tiles" data-layer="tiles"><i class="icon plane"></i></a>
-        <a class="btn toggle" title="Objects" data-layer="game-objects"><i class="icon cube"></i></a>
-      </div>
-      <!--/layers-->
-    </div>
-  </div>
-
-  <div class="app-heavy app-horizontal">
-    <div class="app-heavy app-vertical">
-      <div id="content" class="app-heavy">
-        <canvas id="editor"></canvas>
-      </div>
-
-      <div id="browser" class="app-light app-horizontal">
-        <div id="tile-browser" class="app-heavy panel">
-          <div class="panel-header">
-            <h3 class="panel-title">Tile Browser</h3>
-          </div>
-          <div class="panel-body">
-            <div id="materials" class="browser"></div>
-          </div>
-        </div>
-
-        <div id="object-browser" class="app-heavy panel">
-          <div class="panel-header">
-            <h3 class="panel-title">Object Browser</h3>
-          </div>
-          <div class="panel-body">
-            <div id="gameObjects" class="browser"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="inspector" class="app-light panel">
-      <div class="panel-header">
-        <h3 class="panel-title">Inspector</h3>
-      </div>
-      <div class="panel-body">
-        &nbsp;
-      </div>
-    </div>
-  </div>
-
-  <div id="statusbar" class="app-light">
-  </div>
-</div>
-
-<script>
-  require('./assets/main');
-</script>
-
+  <div id="app"></div>
+  <script>
+    require('./scripts/main');
+  </script>
 </body>
 </html>

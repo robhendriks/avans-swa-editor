@@ -1,62 +1,33 @@
-const electron = require('electron')
-const app = electron.app
-const ipc = electron.ipcMain
-const dialog = electron.dialog
-const BrowserWindow = electron.BrowserWindow
+const {app, BrowserWindow} = require('electron');
+const path = require('path');
+const url = require('url');
 
-let mainWindow
+let mainWindow;
 
 function createWindow () {
-  let windowOptions = {
-    width: 1280,
-    minWidth: 1024,
-    height: 1024,
-    minHeight: 768,
-    title: app.getName()
-  }
+  mainWindow = new BrowserWindow({width: 800, height: 600});
 
-  mainWindow = new BrowserWindow(windowOptions)
-  mainWindow.loadURL(`file://${__dirname}/index.html`)
-  mainWindow.webContents.openDevTools()
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
 
   mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+    mainWindow = null;
+  });
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
 app.on('activate', () => {
   if (mainWindow === null) {
-    createWindow()
+    createWindow();
   }
-})
-
-ipc.on('open-file-dialog', function (event) {
-  dialog.showOpenDialog(mainWindow, {
-    title: 'Open World',
-    filters: [
-      {name: 'JSON', extensions: ['json']}
-    ],
-    properties: ['openFile']
-  }, function (files) {
-    if (files) event.sender.send('open-file-done', files)
-  })
-})
-
-ipc.on('save-file-dialog', function (event) {
-  dialog.showSaveDialog(mainWindow, {
-    title: 'Save World',
-    filters: [
-      {name: 'JSON', extensions: ['json']}
-    ]
-  }, function (files) {
-    if (files) event.sender.send('save-file-done', files)
-  })
-})
+});
